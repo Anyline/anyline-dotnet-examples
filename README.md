@@ -11,7 +11,7 @@ native Anyline [Android](https://documentation.anyline.com/toc/platforms/android
 
 ## Quick Start ##
 
-* Clone or Download this repository and open the Solution located inside the Examples/MAUI folder in Visual Studio.
+* Clone or Download this repository and open the Solution located inside the MAUI folder in Visual Studio.
 
 ## File summary ##
 
