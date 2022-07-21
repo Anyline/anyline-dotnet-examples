@@ -21,13 +21,14 @@ native Anyline [Android](https://documentation.anyline.com/toc/platforms/android
 
 ### Examples ###
 
-The [Examples](Examples) directory provides source code for the Anyline MAUI Example apps. Simply build & run the example project for your desired platform and enjoy scanning :)
-The examples app is designed in a generic way to work with any technical capability. In your specific implementation, it is advised to used the 
+The [MAUI](MAUI) directory provides source code for the Anyline MAUI Example App. Simply build & run the example project for your desired platform and enjoy scanning :)
+The examples app is designed in a generic way to work with any technical capability. In your use-case, it is advised to parse the scan results directly into the specific plugin objects. Check the "PLUGIN SPECIFICS" section on the [Android](https://documentation.anyline.com/toc/platforms/android/plugins/index.html) and [iOS](https://documentation.anyline.com/toc/platforms/ios/plugins/index.html) documentation pages for more information.
 
+<!--
 ### Quick start & setup ###
 
 For a detailed setup guide on how to integrate Anyline for your scanning application, please visit the [Anyline .NET documentation](https://documentation.anyline.io/toc/platforms/dotnet/index.html).
-
+-->
 
 ### Available Technical Capabilities ###
 - [**Barcode:**](https://documentation.anyline.com/toc/products/barcode/index.html)  Scan 40+ types of international barcode & QR code formats.
