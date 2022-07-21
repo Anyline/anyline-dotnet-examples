@@ -1,10 +1,13 @@
-## Anyline .NET SDK ##
+## Anyline .NET Examples ##
 
 Anyline provides an easy-to-use SDK for applications to enable Optical Character Recognition (OCR) on mobile devices.
 
 * The Anyline .NET SDK is essentially a Binding Library that wraps around the native Anyline SDK so all native functionality can be simply invoked via C# calls. 
 
-* For more information, please refer to the documentation page of the Anyline [.NET](https://documentation.anyline.com/toc/platforms/dotnet) SDK, as well as the native Anyline [Android](https://documentation.anyline.com/toc/platforms/android/index.html) and [iOS](https://documentation.anyline.com/toc/platforms/ios/index.html) documentation pages.
+* For more information, please refer to the
+native Anyline [Android](https://documentation.anyline.com/toc/platforms/android/index.html) and [iOS](https://documentation.anyline.com/toc/platforms/ios/index.html) SDKs documentation pages.
+
+<!-- Anyline [.NET](https://documentation.anyline.com/toc/platforms/dotnet) SDK, as well as the --> 
 
 ## Quick Start ##
 
