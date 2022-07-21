@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.anyline.examples">
+	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true" android:hardwareAccelerated="true"></application>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.CAMERA" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.NFC" />
+	<uses-feature android:name="android.hardware.camera" android:required="false" />
+	<uses-feature android:name="android.hardware.camera.flash" />
+	<uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+	<uses-feature android:name="android.hardware.nfc" android:required="false" />
+	<uses-sdk android:targetSdkVersion="31" android:minSdkVersion="24" />
+</manifest>

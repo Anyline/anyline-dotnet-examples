@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Anyline.Examples.MAUI.Models"
+             x:Class="Anyline.Examples.MAUI.MainPage"
+             BackgroundColor="Black"
+             >
+
+    <ScrollView>
+        <VerticalStackLayout VerticalOptions="FillAndExpand" Spacing="0">
+            <Image
+                Source="anyline_logo.png"
+                BackgroundColor="Black"
+                HeightRequest="150"
+                Margin="0,20,0,0"
+                HorizontalOptions="Center" />
+
+            <!--Known Issues: iOS CollectionView has a size calculation issue: https://github.com/dotnet/maui/issues/6605 -->
+            <!--  
+            <CollectionView x:Name="cvScanModes" IsGrouped="true" ItemSizingStrategy="MeasureAllItems" SelectionMode="Single" SelectionChanged="cvScanModes_SelectionChanged">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="{Binding Name}" TextColor="White" FontSize="14" Padding="15" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout>
+                            <Line HeightRequest=".05" BackgroundColor="White" />
+                            <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource Primary}" Padding="5,10" />
+                            <Line HeightRequest=".05" BackgroundColor="White" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.GroupHeaderTemplate>
+            </CollectionView>-->
+
+            <VerticalStackLayout x:Name="slScanModes" VerticalOptions="CenterAndExpand" Spacing="0" Padding="10" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
