@@ -14,12 +14,12 @@ public partial class MainPage : ContentPage
         NavigationPage.SetBackButtonTitle(this, "Home");
 
         // YOUR LICENSE KEY HERE
-        // (this license key should, ideally, be securely fetched from your back-end server or a secret manage/provider)
+        // (this license key should be, ideally, securely fetched from your back-end server, a secret manager/provider, or obfuscated in the final app)
         string licenseKey = "ewogICJsaWNlbnNlS2V5VmVyc2lvbiI6ICIzLjAiLAogICJkZWJ1Z1JlcG9ydGluZyI6ICJwaW5nIiwKICAibWFqb3JWZXJzaW9uIjogIjM3IiwKICAic2NvcGUiOiBbCiAgICAiQUxMIgogIF0sCiAgIm1heERheXNOb3RSZXBvcnRlZCI6IDUsCiAgImFkdmFuY2VkQmFyY29kZSI6IHRydWUsCiAgIm11bHRpQmFyY29kZSI6IHRydWUsCiAgInN1cHBvcnRlZEJhcmNvZGVGb3JtYXRzIjogWwogICAgIkFMTCIKICBdLAogICJwbGF0Zm9ybSI6IFsKICAgICJpT1MiLAogICAgIkFuZHJvaWQiCiAgXSwKICAic2hvd1dhdGVybWFyayI6IHRydWUsCiAgInRvbGVyYW5jZURheXMiOiAzMCwKICAidmFsaWQiOiAiMjAyMi0xMi0zMSIsCiAgImlvc0lkZW50aWZpZXIiOiBbCiAgICAiY29tLmFueWxpbmUueGFtYXJpbi5leGFtcGxlcyIsCiAgICAiY29tLmFueWxpbmUueGFtYXJpbi5mb3Jtcy5leGFtcGxlcyIsCiAgICAiY29tLmFueWxpbmUuZXhhbXBsZXMiCiAgXSwKICAiYW5kcm9pZElkZW50aWZpZXIiOiBbCiAgICAiY29tLmFueWxpbmUueGFtYXJpbi5leGFtcGxlcyIsCiAgICAiY29tLmFueWxpbmUueGFtYXJpbi5mb3Jtcy5leGFtcGxlcyIsCiAgICAiY29tLmFueWxpbmUuZXhhbXBsZXMiCiAgXQp9CnRad29IWnlXZmtYV1FldkRBUWdiNUYzQm1xVU9mOWQ2a3Vma0tsY1k0OU1CQWkybXZNUGI3N3JaRkhCeEJ1YUZjTmNrckJXbm83Yjl2U2RWWGNpdlQxcUx0MGtGK1BTMDlBb014alBCWjM3TllnQU5FTCtsdWF6UmhjVWJscmE2ek52UnpCdGhyblpPMy85WmVhZ0JYdTNCWFF3b0Vrc3p3TzJFVndTY0krNEdrb1hNTjFFU2ExL0YyNUhmMlBSay8yUmpvam9YeGdwR0hQVnJXcjRwUG03WlI4ZW1rUUtRU3N1U3NXTjdpMldsUFd0ekNuOU5HcjhvMWxxOUpEU1BvY3NmTXRqc2xwNjliM3Bibk9VR0k5dnFUUkdQZ0hZSktUSGVDVFZVdzlTWkZCb3psTFN4ZEJnalZWSUk1QW1xTTZRMjV1TVpvU044N3NWanhTaTE4Zz09";
 
         string licenseErrorMessage = null;
 
-        // Initializes the Anyline SDK natively in each platform and get the result of the initialization back
+        // Initializes the Anyline SDK natively in each platform and gets the result of the initialization back
         bool isAnylineInitialized = new AnylineSDKService().SetupWithLicenseKey(licenseKey, out licenseErrorMessage);
 
         if (isAnylineInitialized)
@@ -67,15 +67,7 @@ public partial class MainPage : ContentPage
 
         AnylineScanMode scanMode = new AnylineScanMode(name_config[0], name_config[1], string.Empty);
 
-#if IOS
-        // On iOS, using the new ViewRender still presents many undesired behaviours and issues,
-        // therefore, we are still using the deprecate PageRenderer, for now.
-        await Navigation.PushAsync(new AnylineScanPage(scanMode));
-#elif ANDROID
-       // On Android, the new ViewRenderer can already be used correctly,
-       // while the deprecated PageRenderer does not work at all, regardless of the Anyline SDK.
-       await Navigation.PushAsync(new MyScanningWithAnylinePage(scanMode));
-#endif
+        await Navigation.PushAsync(new MyScanningWithAnylinePage(scanMode));
 
         (sender as Button).IsEnabled = true;
     }

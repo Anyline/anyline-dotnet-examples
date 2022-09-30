@@ -2,9 +2,6 @@
 namespace Anyline.Examples.MAUI.Views
 {
     /// <summary>
-    /// 
-    /// (Currently only in use on Android)
-    /// 
     /// This ContentView is rendered natively in each individual platform. 
     /// The scanning results are received in the 'OnResult' action.
     /// </summary>

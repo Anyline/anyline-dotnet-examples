@@ -57,7 +57,7 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
 
                 // Obtain the JSON config file path from the "AnylineScanningView", defined in the MAUI level.
                 string jsonConfigFilePath = (Element as AnylineScanningView).JSONConfigPath.Replace(".json", "") + ".json";
- 
+
                 // This is the main intialization method that will create our use case depending on the JSON configuration.
                 _scanView.Init(jsonConfigFilePath);
 
@@ -115,8 +115,11 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
 
         protected override void OnDetachedFromWindow()
         {
-            DisposeAnyline();
             base.OnDetachedFromWindow();
+
+            DisposeAnyline();
+            RemoveAllViews();
+            Dispose();
         }
 
         private void DisposeAnyline()
@@ -125,13 +128,19 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
             {
                 _scanView.Stop();
                 _scanView.CameraView.ReleaseCameraInBackground();
+
                 _scanView.CameraOpened -= _scanView_CameraOpened;
                 _scanView.CameraError -= _scanView_CameraError;
-                _scanView.Dispose();
+
+                _scanView.ScanViewPlugin.RemoveScanResultListener(this);
+                _scanView.ScanViewPlugin.Dispose();
+                _scanView.CameraController.Dispose();
+
+                _scanView.RemoveAllViews();
+                _scanView.CameraView.Dispose();
                 _scanView = null;
-                initialized = false;
             }
-            RemoveAllViews();
+            initialized = false;
         }
 
         /// <summary>

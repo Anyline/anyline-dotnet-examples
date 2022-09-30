@@ -5,7 +5,7 @@
   },
   "flash": {
     "mode": "manual",
-    "alignment": "top_right"
+    "alignment": "bottom_right"
   },
 
   "serialViewPluginComposite": {

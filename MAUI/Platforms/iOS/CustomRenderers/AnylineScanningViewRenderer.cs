@@ -1,5 +1,6 @@
 ﻿using Anyline.Examples.MAUI.Views;
 using Anyline.SDK.NET.iOS;
+using CoreGraphics;
 using Foundation;
 using Microsoft.Maui.Controls.Handlers.Compatibility;
 using Microsoft.Maui.Controls.Platform;
@@ -8,59 +9,49 @@ using UIKit;
 namespace Anyline.Examples.MAUI.Platforms.iOS.CustomRenderers
 {
     /* 
-     * This Renderer is currently not in use.
-     * Current issues:
-     * - Cutouts are not correctly positioned vertically
-     * - Rotation does not work properly
-     * - Not able to read the "Bounds" of the View (just the page) -> No possibility to use it the ScanView as a "ContentView", just as a "Page" (fullscreen)
+     * Known issues:
+     * It is not possible to read the "Bounds" of the View if it was not assigned the HeightRequest and WidthRequest properties 
+     *  -> No possibility to use the ScanView alongside other views without those values
+     *  -> If the values were informed, using the ScanView alongside other views is possible, but then Rotation will not work properly
      */
 
+    /// <summary>
+    /// This class is responsible for rendering the Anyline ScanView natively.
+    /// </summary>
     internal class AnylineScanningViewRenderer : ViewRenderer
     {
-        private bool initialized;
         private ALScanView _scanView;
-        ScanResultDelegate _resultDelegate;
+        private ScanResultDelegate _resultDelegate;
 
-        protected override void OnElementChanged(ElementChangedEventArgs<View> e)
+        public override void WillMoveToWindow(UIWindow window)
         {
-            base.OnElementChanged(e);
-            if (e.OldElement != null || Element == null)
-            {
-                return;
-            }
+            base.WillMoveToWindow(window);
+            if (window != null)
+                InitializeAnylineScanView(window);
+            else
+                DisposeAnyline();
         }
 
-        private void InitializeAnyline(UIWindow window)
+        private void InitializeAnylineScanView(UIWindow window)
         {
             NSError error = null;
 
-            if (initialized)
-                return;
-
             try
             {
-                string file = (Element as AnylineScanningView).JSONConfigPath.Replace(".json", "");
+                // Obtain the JSON config file path, defined in the MAUI level.
+                string jsonConfigFilePath = (Element as AnylineScanningView).JSONConfigPath.Replace(".json", "");
 
-                var configPath = NSBundle.MainBundle.PathForResource(file, @"json");
-
-                System.Diagnostics.Debug.WriteLine("Config PATH: " + configPath);
+                var configPath = NSBundle.MainBundle.PathForResource(jsonConfigFilePath, @"json");
 
                 // This is the main intialization method that will create our use case depending on the JSON configuration.
                 _resultDelegate = new ScanResultDelegate((Element as AnylineScanningView).OnResult);
 
+                CGRect scanViewBounds = window.Screen.Bounds;
+                // If the AnylineScanView was manually given Height and Width values, use its own Bounds instead
+                if (Bounds != new CGRect())
+                    scanViewBounds = Bounds;
 
-                //_scanView = ALScanView.ScanViewForFrame(frameSize, configPath, _resultDelegate, out error);
-
-                _scanView = ALScanView.ScanViewForFrame(window.Screen.Bounds, configPath, _resultDelegate, out error);
-
-                //NSError jsonError = null;
-
-                //NSData jsonData = NSData.FromString("{  \"camera\": {    \"captureResolution\": \"720\"  },  \"flash\": {    \"mode\": \"manual\",    \"alignment\": \"bottom_right\"  },  \"viewPlugin\": {    \"plugin\": {      \"id\": \"USNR_ID\",      \"ocrPlugin\": {        \"ocrConfig\": {}      },      \"delayStartScanTime\": 1000    },    \"cutoutConfig\": {      \"style\": \"rect\",      \"width\": 720,      \"alignment\": \"top_half\",      \"maxWidthPercent\": \"80%\",      \"ratioFromSize\": {        \"width\": 720,        \"height\": 144      },      \"strokeWidth\": 2,      \"strokeColor\": \"FFFFFF\",      \"cornerRadius\": 4,      \"outerColor\": \"000000\",      \"outerAlpha\": 0.5,      \"feedbackStrokeColor\": \"0099FF\",      \"offset\": {        \"x\": 0,        \"y\": -15      }    },    \"scanFeedback\": {      \"style\": \"CONTOUR_RECT\",      \"strokeColor\": \"0099FF\",      \"fillColor\": \"220099FF\",      \"beepOnResult\": true,      \"vibrateOnResult\": true,      \"blinkAnimationOnResult\": true    },    \"cancelOnResult\": true  }}", NSStringEncoding.UTF8);
-                //NSDictionary myDictionary = (NSDictionary)NSJsonSerialization.Deserialize(jsonData, NSJsonReadingOptions.FragmentsAllowed, out jsonError);
-
-                //// This is the main intialization method that will create our use case depending on the JSON configuration.
-                //_resultDelegate = new ScanResultDelegate((Element as MyScanningView).ShowResultsAction);
-                //_scanView = ALScanView.ScanViewForFrame(new CGRect(0, 0, 700, 700), myDictionary, _resultDelegate, out error);
+                _scanView = ALScanView.ScanViewForFrame(scanViewBounds, configPath, _resultDelegate, out error);
 
                 if (error != null)
                 {
@@ -69,72 +60,37 @@ namespace Anyline.Examples.MAUI.Platforms.iOS.CustomRenderers
 
                 ConnectDelegateToScanPlugin();
 
-                // Pin the leading edge of the scan view to the parent view
-
-                _scanView.TranslatesAutoresizingMaskIntoConstraints = true;
-
-                //_scanView.LeadingAnchor.ConstraintEqualTo(LeadingAnchor).Active = true;
-                //_scanView.TrailingAnchor.ConstraintEqualTo(TrailingAnchor).Active = true;
-                //_scanView.TopAnchor.ConstraintEqualTo(SafeAreaLayoutGuide.TopAnchor).Active = true;
-                //_scanView.BottomAnchor.ConstraintEqualTo(SafeAreaLayoutGuide.BottomAnchor).Active = true;
-
                 Add(_scanView);
 
                 _scanView.StartCamera();
-                Task.Delay(500).ContinueWith((r) =>
-                {
-                    BeginInvokeOnMainThread(() => StartAnyline());
-                });
-
-                initialized = true;
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("EXCEPTION: " + e.Message);
-                //ShowAlert("Init Error", e.Message);
             }
         }
 
+        /// <summary>
+        /// This method is called after the _scanView is added.
+        /// </summary>
+        /// <param name="uiview">The _scanView itself</param>
         public override void SubviewAdded(UIView uiview)
         {
             base.SubviewAdded(uiview);
+
+            // To allow rotation, pin the edge of the scan view to the parent view:
+            _scanView.TranslatesAutoresizingMaskIntoConstraints = false;
+
+            _scanView.LeadingAnchor.ConstraintEqualTo(Superview.LeadingAnchor).Active = true;
+            _scanView.TrailingAnchor.ConstraintEqualTo(Superview.TrailingAnchor).Active = true;
+            _scanView.TopAnchor.ConstraintEqualTo(Superview.SafeAreaLayoutGuide.TopAnchor).Active = true;
+            _scanView.BottomAnchor.ConstraintEqualTo(Superview.BottomAnchor).Active = true;
+
+            // Start scanning!
+            BeginInvokeOnMainThread(() => StartAnylineScanner());
         }
 
-        public override void WillMoveToSuperview(UIView newsuper)
-        {
-            base.WillMoveToSuperview(newsuper);
-        }
-
-        public override void MovedToWindow()
-        {
-            base.MovedToWindow();
-        }
-
-        public override void WillMoveToWindow(UIWindow window)
-        {
-            base.WillMoveToWindow(window);
-            if (window != null)
-                InitializeAnyline(window);
-            else
-                Dispose();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            _scanView.ScanViewPlugin.StopAndReturnError(out NSError error);
-
-            if (error != null)
-            {
-                System.Diagnostics.Debug.WriteLine(error.DebugDescription);
-            }
-            _scanView?.Dispose();
-            _scanView?.RemoveFromSuperview();
-            _scanView = null;
-        }
-
-        private void StartAnyline()
+        private void StartAnylineScanner()
         {
             NSError error = null;
             var success = _scanView.ScanViewPlugin.StartAndReturnError(out error);
@@ -143,14 +99,27 @@ namespace Anyline.Examples.MAUI.Platforms.iOS.CustomRenderers
                 if (error != null)
                 {
                     System.Diagnostics.Debug.WriteLine(error.DebugDescription);
-                    //ShowAlert("Start Scanning Error", error.DebugDescription);
                 }
                 else
                 {
                     System.Diagnostics.Debug.WriteLine("error is null");
-                    //ShowAlert("Start Scanning Error", "error is null");
                 }
             }
+        }
+
+        protected void DisposeAnyline()
+        {
+            if (_scanView != null && _scanView.ScanViewPlugin != null)
+            {
+                _scanView.ScanViewPlugin.StopAndReturnError(out NSError error);
+
+                if (error != null)
+                    System.Diagnostics.Debug.WriteLine(error.DebugDescription);
+            }
+
+            _scanView?.Dispose();
+            _scanView?.RemoveFromSuperview();
+            _scanView = null;
         }
 
         private void ConnectDelegateToScanPlugin()
@@ -161,20 +130,29 @@ namespace Anyline.Examples.MAUI.Platforms.iOS.CustomRenderers
             (_scanView.ScanViewPlugin as ALMeterScanViewPlugin)?.MeterScanPlugin.AddDelegate(_resultDelegate);
             (_scanView.ScanViewPlugin as ALDocumentScanViewPlugin)?.DocumentScanPlugin.AddDelegate(_resultDelegate);
             (_scanView.ScanViewPlugin as ALLicensePlateScanViewPlugin)?.LicensePlateScanPlugin.AddDelegate(_resultDelegate);
+            // add listener to the composite as a whole (to get the information once all the results are available)
             (_scanView.ScanViewPlugin as ALAbstractScanViewPluginComposite)?.AddDelegate(_resultDelegate);
-        }
-    }
 
-    public class MyInfoDelegate : IALInfoDelegate
-    {
-        public override void ReportInfo(ALAbstractScanPlugin anylineScanPlugin, ALScanInfo info)
-        {
-            System.Diagnostics.Debug.WriteLine("INFO: " + info.Value.ToString());
-        }
+            //// OR 
 
-        public override void RunSkipped(ALAbstractScanPlugin anylineScanPlugin, ALRunSkippedReason runSkippedReason)
-        {
-            System.Diagnostics.Debug.WriteLine("INFO SKIPPED: " + runSkippedReason.Reason.ToString());
+            //// add individual listeners (in case you need to listen to partial results and interrupt the workflow)
+            //// -> in this case, remember to call "scanView.ScanViewPlugin.StopAndReturnError(out error)" after the result to stop scanning.
+
+            //var parallelComposite = (_scanView.ScanViewPlugin as ALParallelScanViewPluginComposite);
+            //if (parallelComposite != null)
+            //{
+            //    foreach (ALAbstractScanViewPlugin item in parallelComposite.ChildPlugins.Values)
+            //    {
+            //        if (item is ALMeterScanViewPlugin meterScanViewPlugin)
+            //        {
+            //            meterScanViewPlugin.MeterScanPlugin.AddDelegate(_resultDelegate);
+            //        }
+            //        else if (item is ALBarcodeScanViewPlugin barcodeScanViewPlugin)
+            //        {
+            //            barcodeScanViewPlugin.BarcodeScanPlugin.AddDelegate(_resultDelegate);
+            //        }
+            //    }
+            //}
         }
     }
 }

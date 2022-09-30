@@ -7,6 +7,7 @@ namespace Anyline.Examples.MAUI;
 /// <summary>
 /// This is your app's page where Anyline will be integrated.
 /// For Android, you can use Anyline as a single View on the page, or together with other views.
+/// For iOS, this is only possible when informing the Height and Width of the component. Some extra changes are required in the iOS "AnylineScanViewRenderer".
 /// </summary>
 public partial class MyScanningWithAnylinePage : ContentPage
 {
@@ -25,8 +26,13 @@ public partial class MyScanningWithAnylinePage : ContentPage
             DoSomethingWithResult(results, scanMode);
         };
 
+        // Known Limitation: On iOS, the only way to use the Anyline ScanView alongside other views is by giving it a HeightRequest and a WidthRequest, e.g.:
+        //      HeightRequest = 500, WidthRequest = DeviceDisplay.Current.MainDisplayInfo.Width / DeviceDisplay.Current.MainDisplayInfo.Density
+        // But this will prevent rotation to work properly. Changes are also required in the iOS Renderer.
         var view = new AnylineScanningView(scanMode.JSONConfigPath, myResultAction);
+
         //Grid.SetColumnSpan(view, 2);
+
         gridContent.Add(view, 0, 0);
     }
 
@@ -42,10 +48,5 @@ public partial class MyScanningWithAnylinePage : ContentPage
             Navigation.InsertPageBefore(new ResultsPage(results, scanMode), Navigation.NavigationStack.Last());
             await Navigation.PopAsync();
         }));
-    }
-
-    protected override void OnDisappearing()
-    {
-        base.OnDisappearing();
     }
 }

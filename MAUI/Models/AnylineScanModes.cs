@@ -37,7 +37,7 @@ namespace Anyline.Examples.MAUI.Models
                 }),
                 new AnylineScanModeGroup("Maintenance, Repair & Operations", new List<AnylineScanMode>{
                     new AnylineScanMode("Universal Serial Number", "mro_usnr_config.json"),
-                    new AnylineScanMode("Shipping Container - Horizontal", "mroshipping_container_horizontal_config.json"),
+                    new AnylineScanMode("Shipping Container - Horizontal", "mro_shipping_container_horizontal_config.json"),
                     new AnylineScanMode("Shipping Container - Vertical", "mro_shipping_container_vertical_config.json"),
                 }),
                 new AnylineScanModeGroup("Others", new List<AnylineScanMode>{

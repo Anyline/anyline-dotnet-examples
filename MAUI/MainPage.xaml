@@ -9,8 +9,7 @@
     <ScrollView>
         <VerticalStackLayout VerticalOptions="FillAndExpand" Spacing="0">
             <Image
-                Source="anyline_logo.png"
-                BackgroundColor="Black"
+                Source="anyline_logo_white.png"
                 HeightRequest="150"
                 Margin="0,20,0,0"
                 HorizontalOptions="Center" />

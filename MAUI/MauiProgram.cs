@@ -4,7 +4,6 @@
 namespace Anyline.Examples.MAUI;
 
 using Views;
-using Microsoft.Maui.Controls.Compatibility.Hosting;
 
 #if ANDROID
 using Anyline.Examples.MAUI.Platforms.Android.CustomRenderers;
@@ -21,14 +20,10 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
-            .UseMauiCompatibility()
             .ConfigureMauiHandlers(handlers =>
             {
                 //handlers.AddHandler(typeof(AnylineView), typeof(AnylineHandler));
                 handlers.AddHandler(typeof(AnylineScanningView), typeof(AnylineScanningViewRenderer));
-#if IOS
-                handlers.AddCompatibilityRenderer(typeof(AnylineScanPage), typeof(AnylineScanPageRenderer));
-#endif
             })
             .ConfigureFonts(fonts =>
             {
