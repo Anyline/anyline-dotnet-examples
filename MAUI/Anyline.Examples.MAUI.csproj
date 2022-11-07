@@ -18,7 +18,7 @@
 		<ApplicationIdGuid>9C37433F-9192-4C96-B49A-B9A7E047FBC2</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationDisplayVersion>1.1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">12.0</SupportedOSPlatformVersion>
@@ -89,7 +89,7 @@
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-ios'">
 
 		<!-- Refereces the Anyline iOS.NET SDK -->
-		<PackageReference Include="Anyline.SDK.NET.iOS" Version="1.0.0" />
+		<PackageReference Include="Anyline.SDK.NET.iOS" Version="1.1.0" />
 
 	</ItemGroup>
 
@@ -97,7 +97,7 @@
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
 
 		<!-- Refereces the Anyline Android .NET SDK -->
-		<PackageReference Include="Anyline.SDK.NET.Android" Version="1.0.0" />
+		<PackageReference Include="Anyline.SDK.NET.Android" Version="1.1.0" />
 
 		<!-- Required for the usage of the Face Detection feature on Universal ID / MRZ scan modes -->
 		<PackageReference Include="Xamarin.GooglePlayServices.MLKit.FaceDetection" Version="116.1.7" />
