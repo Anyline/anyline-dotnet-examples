@@ -27,7 +27,7 @@ namespace Anyline.Examples.MAUI.Models
                     new AnylineScanMode("License Plates - USA", "vehicle_config_license_plate_us.json"),
                     new AnylineScanMode("License Plates - Africa", "vehicle_config_license_plate_africa.json"),
                     new AnylineScanMode("Vehicle Identification Number (VIN)", "vehicle_vin_config.json"),
-
+                    new AnylineScanMode("Vehicle Registration Certificate", "vehicle_registration_certificate_config.json"),
                 }),
                 new AnylineScanModeGroup("Tire", new List<AnylineScanMode>{
                     new AnylineScanMode("TIN - Universal","tire_tin_universal_config.json"),
@@ -40,16 +40,18 @@ namespace Anyline.Examples.MAUI.Models
                     new AnylineScanMode("Shipping Container - Horizontal", "mro_shipping_container_horizontal_config.json"),
                     new AnylineScanMode("Shipping Container - Vertical", "mro_shipping_container_vertical_config.json"),
                 }),
-                new AnylineScanModeGroup("Others", new List<AnylineScanMode>{
+                new AnylineScanModeGroup("Barcode", new List<AnylineScanMode>{
                     new AnylineScanMode("Barcode", "others_config_barcode.json"),
+                    new AnylineScanMode("Barcode - PDF417 - AAMVA", "others_config_barcode_pdf417_config.json"),
                 }),
-                new AnylineScanModeGroup("Workflows", new List<AnylineScanMode>{
-                    new AnylineScanMode("Serial Scanning (LPT > ID > VIN)","workflows_config_serial_scanning.json"),
-                    new AnylineScanMode("Parallel Scanning (Meter / Barcode)","workflows_config_parallel_scanning.json")
+                new AnylineScanModeGroup("Composite", new List<AnylineScanMode>{
+                    new AnylineScanMode("Serial Scanning (LPT - EU > DVL > VIN)","workflows_config_serial_scanning.json"),
+                    new AnylineScanMode("Parallel Scanning (Meter / Serial Number)","workflows_config_parallel_scanning.json")
                 }),
-                //new AnylineScanModeGroup("NFC", new List<AnylineScanMode>{
-                //    new AnylineScanMode("","")
-                //})
+                new AnylineScanModeGroup("NFC", new List<AnylineScanMode>
+                {
+                    new AnylineScanMode("Scan NFC of Passports","id_config_mrz.json")
+                })
             };
         }
     }
@@ -68,6 +70,7 @@ namespace Anyline.Examples.MAUI.Models
     {
         public string Name { get; set; }
         public string JSONConfigPath { get; set; }
+        public bool IsNFC { get; set; }
 
         public AnylineScanMode(string name, string jsonConfigPath, string configsPath = "Configs/")
         {

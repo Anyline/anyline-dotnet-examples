@@ -7,7 +7,7 @@ namespace Anyline
         {
             try
             {
-                IO.Anyline.AnylineSDK.Init(licenseKey, context: Examples.MAUI.MainActivity.Instance);
+                IO.Anyline2.AnylineSdk.Init(licenseKey, context: Examples.MAUI.MainActivity.Instance);
                 licenseErrorMessage = null;
                 return true;
             }

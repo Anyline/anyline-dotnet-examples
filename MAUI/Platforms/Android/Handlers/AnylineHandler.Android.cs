@@ -38,7 +38,7 @@ namespace Anyline.Examples.MAUI.Handlers
                 // Activates Face Detection if the MRZ Scanner was initialized
                 (((_scanView.ScanViewPlugin as IdScanViewPlugin)?.ScanPlugin as IdScanPlugin)?.IdConfig as MrzConfig)?.EnableFaceDetection(true);
 
-                _scanView.ScanViewPlugin.AddScanResultListener(new MyScanResultListener());
+                //_scanView.ScanViewPlugin.AddScanResultListener(new MyScanResultListener());
 
                 // handle camera open events
                 _scanView.CameraOpened += _scanView_CameraOpened;

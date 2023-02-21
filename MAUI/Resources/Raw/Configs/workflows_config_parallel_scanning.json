@@ -1,112 +1,97 @@
 {
-  "camera": {
-    "captureResolution": "1080p"
-  },
-  "flash": {
-    "mode": "manual",
-    "alignment": "bottom_right"
-  },
-  "parallelViewPluginComposite": {
-    "id": "METER_AND_BARCODE",
-    "cancelOnResult": true,
+  "viewPluginCompositeConfig": {
+    "id": "meter_serial_parallel_scan",
+    "processingMode": "parallel",
     "viewPlugins": [
       {
-        "viewPlugin": {
-          "plugin": {
-            "id": "METER_PLUGIN",
-            "meterPlugin": {
-              "scanMode": "AUTO_ANALOG_DIGITAL_METER"
-            }
-          },
-          "cutoutConfig": {
-            "style": "rect",
-            "alignment": "top_half",
-            "strokeWidth": 2,
-            "strokeColor": "FFFFFF",
-            "cornerRadius": 4,
-            "outerColor": "000000",
-            "outerAlpha": 0.5,
-            "feedbackStrokeColor": "0099FF",
-            "offset": {
-              "x": 0,
-              "y": 120
-            }
-          },
-          "scanFeedback": {
-            "style": "CONTOUR_RECT",
-            "strokeColor": "0099FF",
-            "strokeWidth": 2,
-            "fillColor": "220099FF",
-            "cornerRadius": 2,
-            "redrawTimeout": 200,
-            "animationDuration": 75,
-            "blinkOnResult": true,
-            "beepOnResult": true,
-            "vibrateOnResult": true
-          },
-          "cancelOnResult": true
-        }
-      },
-      {
-        "viewPlugin": {
-          "plugin": {
-            "id": "Barcode_ID",
-            "barcodePlugin": {
-              "barcodeFormatOptions": [
-                "UPC_E",
-                "EAN_13",
-                "UPC_A",
-                "EAN_8",
-                "AZTEC",
-                "CODABAR",
-                "CODE_11",
-                "CODE_32",
-                "CODE_39",
-                "CODE_93",
-                "CODE_128",
-                "DATABAR",
-                "DATA_MATRIX",
-                "GS1_QR_CODE",
-                "GS1_128",
-                "ITF",
-                "ISBT_128",
-                "MSI",
-                "MICRO_QR",
-                "MICRO_PDF",
-                "PDF_417",
-                "POST_UK",
-                "QR_CODE",
-                "RSS_14",
-                "RSS_EXPANDED",
-                "TRIOPTIC",
-                "USPS_4CB",
-                "US_PLANET",
-                "US_POSTNET"
-              ]
-            }
+        "viewPluginConfig": {
+          "pluginConfig": {
+            "id": "meter",
+            "meterConfig": {
+              "scanMode": "auto_analog_digital_meter"
+            },
+            "cancelOnResult": true,
+            "startScanDelay": 0
           },
           "cutoutConfig": {
             "style": "rect",
             "maxWidthPercent": "100%",
-            "maxHeightPercent": "100%",
+            "width": 768,
             "alignment": "top_half",
-            "strokeWidth": 0,
-            "cornerRadius": 0,
-            "strokeColor": "FFFFFFFF",
-            "outerColor": "FF000000",
-            "outerAlpha": 0,
-            "feedbackStrokeColor": "ff9900"
+            "ratioFromSize": {
+              "width": 9,
+              "height": 4
+            },
+            "offset": {
+              "x": 0,
+              "y": 80
+            },
+            "strokeWidth": 2,
+            "cornerRadius": 4,
+            "strokeColor": "0099FF",
+            "outerColor": "000000",
+            "outerAlpha": 0.3
           },
-          "scanFeedback": {
-            "style": "rect",
-            "strokeColor": "ff9900",
-            "fillColor": "22ff9900",
-            "animationDuration": 150,
-            "blinkOnResult": true,
+          "scanFeedbackConfig": {
+            "style": "contour_rect",
+            "strokeWidth": 2,
+            "strokeColor": "0099FF",
+            "fillColor": "220099FF",
+            "cornerRadius": 2,
             "beepOnResult": true,
-            "vibrateOnResult": true
+            "vibrateOnResult": true,
+            "blinkAnimationOnResult": true,
+            "redrawTimeout": 200,
+            "animationDuration": 75
+          }
+        }
+      },
+      {
+        "viewPluginConfig": {
+          "pluginConfig": {
+            "id": "com.anyline.configs.plugin.universal-serial-number",
+            "ocrConfig": {
+              "scanMode": "auto"
+            },
+            "cancelOnResult": true
           },
-          "cancelOnResult": true
+          "cutoutConfig": {
+            "animation": "none",
+            "maxWidthPercent": "80%",
+            "alignment": "center",
+            "ratioFromSize": {
+              "width": 5,
+              "height": 1
+            },
+            "offset": {
+              "x": 0,
+              "y": 0
+            },
+            "cropOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "cropPadding": {
+              "x": 0,
+              "y": 0
+            },
+            "cornerRadius": 4,
+            "strokeColor": "0099ff",
+            "strokeWidth": 2,
+            "outerColor": "000000",
+            "feedbackStrokeColor": "0099FF",
+            "outerAlpha": 0.3
+          },
+          "scanFeedbackConfig": {
+            "style": "rect",
+            "strokeWidth": 2,
+            "cornerRadius": 2,
+            "strokeColor": "0099FF",
+            "fillColor": "330099FF",
+            "beepOnResult": true,
+            "vibrateOnResult": true,
+            "blinkAnimationOnResult": false
+          }
         }
       }
     ]

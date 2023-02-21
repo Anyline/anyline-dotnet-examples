@@ -14,15 +14,16 @@
 		<ApplicationTitle>Anyline.Examples.MAUI</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.anyline.examples</ApplicationId>
+		<ApplicationId>com.anyline.maui.examples</ApplicationId>
 		<ApplicationIdGuid>9C37433F-9192-4C96-B49A-B9A7E047FBC2</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.1.0</ApplicationDisplayVersion>
+		<ApplicationDisplayVersion>2.0.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">12.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
+		<UserSecretsId>381bf50f-33f2-474a-b1b8-d1ec9021d557</UserSecretsId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-android|AnyCPU'">
@@ -38,13 +39,15 @@
 		<BuildIpa>True</BuildIpa>
 		<IpaPackageName>Anyline MAUI Examples</IpaPackageName>
 		<IpaIncludeArtwork>True</IpaIncludeArtwork>
+		<CreatePackage>false</CreatePackage>
+		<CodesignProvision>Automatic</CodesignProvision>
+		<CodesignKey>iPhone Developer</CodesignKey>
+		<CodesignEntitlements></CodesignEntitlements>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-ios|AnyCPU'">
-		<MtouchLink>None</MtouchLink>
-		<BuildIpa>True</BuildIpa>
-		<IpaPackageName>Anyline MAUI Examples</IpaPackageName>
-		<IpaIncludeArtwork>True</IpaIncludeArtwork>
+		<CodesignKey>iPhone Distribution</CodesignKey>
+		<CodesignEntitlements>Platforms\iOS\Entitlements.plist</CodesignEntitlements>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -64,9 +67,17 @@
 
 	<ItemGroup>
 		<None Remove="Platforms\Android\Resources\layout\ScanLayout.axml" />
+		<None Remove="Resources\Raw\Configs\vrc_config.json" />
+		<None Remove="Resources\Raw\Configs\barcode_pdf417_config.json" />
+		<None Remove="NFC\" />
+		<None Remove="Platforms\Android\NFC\" />
+		<None Remove="Platforms\Android\Resources\layout\" />
+		<None Remove="Platforms\iOS\NFC\" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Anyline.SDK.NET.Android" Version="2.0.0" />
+		<PackageReference Include="Anyline.SDK.NET.iOS" Version="2.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	</ItemGroup>
 
@@ -83,27 +94,28 @@
 		<MauiXaml Update="ResultsPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="NFC\NFCResultsPage.xaml">
+		  <SubType></SubType>
+		</MauiXaml>
+		<MauiXaml Condition=" '$(EnableDefaultXamlItems)' == 'true' " Update="NFC\MyScanningWithAnylinePage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	</ItemGroup>
-
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-ios'">
-
-		<!-- Refereces the Anyline iOS.NET SDK -->
-		<PackageReference Include="Anyline.SDK.NET.iOS" Version="1.1.0" />
-
-	</ItemGroup>
-
-
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
-
-		<!-- Refereces the Anyline Android .NET SDK -->
-		<PackageReference Include="Anyline.SDK.NET.Android" Version="1.1.0" />
-
 		<!-- Required for the usage of the Face Detection feature on Universal ID / MRZ scan modes -->
 		<PackageReference Include="Xamarin.GooglePlayServices.MLKit.FaceDetection" Version="116.1.7" />
 		<PackageReference Include="Xamarin.Google.Dagger" Version="2.27.0" />
-
 	</ItemGroup>
 
+	<ItemGroup>
+	  <BundleResource Include="Resources\Raw\Configs\vehicle_registration_certificate_config.json" />
+	  <BundleResource Include="Resources\Raw\Configs\others_config_barcode_pdf417_config.json" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="NFC\" />
+	  <Folder Include="Platforms\Android\NFC\" />
+	  <Folder Include="Platforms\Android\Resources\layout\" />
+	  <Folder Include="Platforms\iOS\NFC\" />
+	</ItemGroup>
 </Project>
 

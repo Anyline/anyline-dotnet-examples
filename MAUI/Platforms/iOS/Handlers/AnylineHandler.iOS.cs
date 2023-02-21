@@ -35,8 +35,7 @@ namespace Anyline.Examples.MAUI.Handlers
             //_scanView = ALScanView.ScanViewForFrame(VirtualView.Bounds, configPath, _resultDelegate, out error);
 
             //_scanView = ALScanView.ScanViewForFrame(new CGRect(0, 0, 320, 520), configPath, _resultDelegate, out error);
-            _scanView = ALScanView.ScanViewForFrame(CGRect.Empty, configPath, _resultDelegate, out error);
-            (_scanView.ScanViewPlugin as ALOCRScanViewPlugin).OcrScanPlugin.AddInfoDelegate(new InfoDelegate());
+            _scanView = ALScanViewFactory.WithConfigFilePath(configPath, _resultDelegate, out error);
             //NSError jsonError = null;
 
             //NSData jsonData = NSData.FromString("{  \"camera\": {    \"captureResolution\": \"720\"  },  \"flash\": {    \"mode\": \"manual\",    \"alignment\": \"bottom_right\"  },  \"viewPlugin\": {    \"plugin\": {      \"id\": \"USNR_ID\",      \"ocrPlugin\": {        \"ocrConfig\": {}      },      \"delayStartScanTime\": 1000    },    \"cutoutConfig\": {      \"style\": \"rect\",      \"width\": 720,      \"alignment\": \"top_half\",      \"maxWidthPercent\": \"80%\",      \"ratioFromSize\": {        \"width\": 720,        \"height\": 144      },      \"strokeWidth\": 2,      \"strokeColor\": \"FFFFFF\",      \"cornerRadius\": 4,      \"outerColor\": \"000000\",      \"outerAlpha\": 0.5,      \"feedbackStrokeColor\": \"0099FF\",      \"offset\": {        \"x\": 0,        \"y\": -15      }    },    \"scanFeedback\": {      \"style\": \"CONTOUR_RECT\",      \"strokeColor\": \"0099FF\",      \"fillColor\": \"220099FF\",      \"beepOnResult\": true,      \"vibrateOnResult\": true,      \"blinkAnimationOnResult\": true    },    \"cancelOnResult\": true  }}", NSStringEncoding.UTF8);
@@ -51,7 +50,6 @@ namespace Anyline.Examples.MAUI.Handlers
                 throw new Exception(error.LocalizedDescription);
             }
 
-            ConnectDelegateToScanPlugin();
 
             _scanView.TranslatesAutoresizingMaskIntoConstraints = true;
 
@@ -88,7 +86,7 @@ namespace Anyline.Examples.MAUI.Handlers
         private void StartAnyline()
         {
             NSError error = null;
-            bool success = _scanView.ScanViewPlugin.StartAndReturnError(out error);
+            bool success = _scanView.ScanViewPlugin.StartWithError(out error);
 
             if (!success)
             {
@@ -105,17 +103,6 @@ namespace Anyline.Examples.MAUI.Handlers
             }
         }
 
-        private void ConnectDelegateToScanPlugin()
-        {
-            (_scanView.ScanViewPlugin as ALIDScanViewPlugin)?.IdScanPlugin.AddDelegate(_resultDelegate);
-            (_scanView.ScanViewPlugin as ALBarcodeScanViewPlugin)?.BarcodeScanPlugin.AddDelegate(_resultDelegate);
-            (_scanView.ScanViewPlugin as ALOCRScanViewPlugin)?.OcrScanPlugin.AddDelegate(_resultDelegate);
-            (_scanView.ScanViewPlugin as ALMeterScanViewPlugin)?.MeterScanPlugin.AddDelegate(_resultDelegate);
-            (_scanView.ScanViewPlugin as ALDocumentScanViewPlugin)?.DocumentScanPlugin.AddDelegate(_resultDelegate);
-            (_scanView.ScanViewPlugin as ALLicensePlateScanViewPlugin)?.LicensePlateScanPlugin.AddDelegate(_resultDelegate);
-            (_scanView.ScanViewPlugin as ALAbstractScanViewPluginComposite)?.AddDelegate(_resultDelegate);
-        }
-
 
         protected override void DisconnectHandler(UIView PlatformView)
         {
@@ -126,21 +113,8 @@ namespace Anyline.Examples.MAUI.Handlers
             //    PlatformView.Delegate = null;
             //}
             _scanView.StopCamera();
-            _scanView.ScanViewPlugin.StopAndReturnError(out NSError error);
+            _scanView.ScanViewPlugin.Stop();
             PlatformView.RemoveFromSuperview();
-        }
-    }
-
-    public class InfoDelegate : IALInfoDelegate
-    {
-        public override void ReportInfo(ALAbstractScanPlugin anylineScanPlugin, ALScanInfo info)
-        {
-            System.Diagnostics.Debug.WriteLine("INFO: " + info.Value.ToString());
-        }
-
-        public override void RunSkipped(ALAbstractScanPlugin anylineScanPlugin, ALRunSkippedReason runSkippedReason)
-        {
-            System.Diagnostics.Debug.WriteLine("INFO SKIPPED: " + runSkippedReason.Reason.ToString());
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Anyline.Examples.MAUI.Models;
+using Anyline.Examples.MAUI.NFC;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.PlatformConfiguration;
 using Microsoft.Maui.Controls.Shapes;
@@ -15,7 +16,7 @@ public partial class MainPage : ContentPage
 
         // YOUR LICENSE KEY HERE
         // (this license key should be, ideally, securely fetched from your back-end server, a secret manager/provider, or obfuscated in the final app)
-        string licenseKey = "ewogICJsaWNlbnNlS2V5VmVyc2lvbiI6ICIzLjAiLAogICJkZWJ1Z1JlcG9ydGluZyI6ICJwaW5nIiwKICAibWFqb3JWZXJzaW9uIjogIjM3IiwKICAic2NvcGUiOiBbCiAgICAiQUxMIgogIF0sCiAgIm1heERheXNOb3RSZXBvcnRlZCI6IDUsCiAgImFkdmFuY2VkQmFyY29kZSI6IHRydWUsCiAgIm11bHRpQmFyY29kZSI6IHRydWUsCiAgInN1cHBvcnRlZEJhcmNvZGVGb3JtYXRzIjogWwogICAgIkFMTCIKICBdLAogICJwbGF0Zm9ybSI6IFsKICAgICJpT1MiLAogICAgIkFuZHJvaWQiCiAgXSwKICAic2hvd1dhdGVybWFyayI6IHRydWUsCiAgInRvbGVyYW5jZURheXMiOiAzMCwKICAidmFsaWQiOiAiMjAyMi0xMi0zMSIsCiAgImlvc0lkZW50aWZpZXIiOiBbCiAgICAiY29tLmFueWxpbmUueGFtYXJpbi5leGFtcGxlcyIsCiAgICAiY29tLmFueWxpbmUueGFtYXJpbi5mb3Jtcy5leGFtcGxlcyIsCiAgICAiY29tLmFueWxpbmUuZXhhbXBsZXMiCiAgXSwKICAiYW5kcm9pZElkZW50aWZpZXIiOiBbCiAgICAiY29tLmFueWxpbmUueGFtYXJpbi5leGFtcGxlcyIsCiAgICAiY29tLmFueWxpbmUueGFtYXJpbi5mb3Jtcy5leGFtcGxlcyIsCiAgICAiY29tLmFueWxpbmUuZXhhbXBsZXMiCiAgXQp9CnRad29IWnlXZmtYV1FldkRBUWdiNUYzQm1xVU9mOWQ2a3Vma0tsY1k0OU1CQWkybXZNUGI3N3JaRkhCeEJ1YUZjTmNrckJXbm83Yjl2U2RWWGNpdlQxcUx0MGtGK1BTMDlBb014alBCWjM3TllnQU5FTCtsdWF6UmhjVWJscmE2ek52UnpCdGhyblpPMy85WmVhZ0JYdTNCWFF3b0Vrc3p3TzJFVndTY0krNEdrb1hNTjFFU2ExL0YyNUhmMlBSay8yUmpvam9YeGdwR0hQVnJXcjRwUG03WlI4ZW1rUUtRU3N1U3NXTjdpMldsUFd0ekNuOU5HcjhvMWxxOUpEU1BvY3NmTXRqc2xwNjliM3Bibk9VR0k5dnFUUkdQZ0hZSktUSGVDVFZVdzlTWkZCb3psTFN4ZEJnalZWSUk1QW1xTTZRMjV1TVpvU044N3NWanhTaTE4Zz09";
+        string licenseKey = "ewogICJsaWNlbnNlS2V5VmVyc2lvbiI6ICIzLjAiLAogICJkZWJ1Z1JlcG9ydGluZyI6ICJwaW5nIiwKICAibWFqb3JWZXJzaW9uIjogIjM3IiwKICAic2NvcGUiOiBbCiAgICAiQUxMIgogIF0sCiAgIm1heERheXNOb3RSZXBvcnRlZCI6IDUsCiAgImFkdmFuY2VkQmFyY29kZSI6IHRydWUsCiAgIm11bHRpQmFyY29kZSI6IHRydWUsCiAgInN1cHBvcnRlZEJhcmNvZGVGb3JtYXRzIjogWwogICAgIkFMTCIKICBdLAogICJwbGF0Zm9ybSI6IFsKICAgICJpT1MiLAogICAgIkFuZHJvaWQiCiAgXSwKICAic2hvd1dhdGVybWFyayI6IHRydWUsCiAgInRvbGVyYW5jZURheXMiOiAzMCwKICAidmFsaWQiOiAiMjAyMy0wNi0zMCIsCiAgImlvc0lkZW50aWZpZXIiOiBbCiAgICAiY29tLmFueWxpbmUueGFtYXJpbi5leGFtcGxlcyIsCiAgICAiY29tLmFueWxpbmUueGFtYXJpbi5mb3Jtcy5leGFtcGxlcyIsCiAgICAiY29tLmFueWxpbmUuZXhhbXBsZXMiLAogICAgImNvbS5hbnlsaW5lLm1hdWkuZXhhbXBsZXMiCiAgXSwKICAiYW5kcm9pZElkZW50aWZpZXIiOiBbCiAgICAiY29tLmFueWxpbmUueGFtYXJpbi5leGFtcGxlcyIsCiAgICAiY29tLmFueWxpbmUueGFtYXJpbi5mb3Jtcy5leGFtcGxlcyIsCiAgICAiY29tLmFueWxpbmUuZXhhbXBsZXMiLAogICAgImNvbS5hbnlsaW5lLm1hdWkuZXhhbXBsZXMiCiAgXQp9CnhFU0JoNVhZSGQyMXh3aHkvaUhsNVdYd1NmZDFscytqQ0VST2x2bGRzam1CV1BpWG44MzloZnZCdG00Y0Qyd3VEdVBHeDNMZXZNcUlPOVhxaXJ3Q256Z1hWd00rZ3hZU2k2N21aazJPMzcyQmlRcE1QQU5mUjFEQTBwcGZPSVN4V09ocjcwVXViNWJicnhYREVmblZPU0svYXFzb0Z2YzVEdDlTNWlmeE5POXV3dVY3Q3RIcjBKZ2NpcmU1UkdzS0xocmEyUTE5TVBDT1hsb3U0MlJadG9JN1dSMnZ6NUR6eUhkUDhGRjJUVlF0TWRiNGZxS1lNbFB3TXRKYUl5OEZtMkRTdmp6QlBCU0RRQUo3SVZMM2R6NEZ4MnhXQnBvTEN6YXNDdG4rc21vakJPYUIwc1NkckFBWFU5RFEwa1BIUjhUMW5XSmZMQ3JOeml2ZUdVK1RjZz09";
 
         string licenseErrorMessage = null;
 
@@ -24,11 +25,6 @@ public partial class MainPage : ContentPage
 
         if (isAnylineInitialized)
         {
-            // Not using the CollectionView as it currently does not work properly on iOS: https://github.com/dotnet/maui/issues/6605
-            //cvScanModes.ItemsSource = AnylineScanModes.GetAnylineScanModesList();
-
-            // ** Still, MAUI has some major ScrollView height calculation issues on iOS compared to Xamarin Forms, so even adding the buttons dynamically might not work on some devices. **
-
             // Load and present Anyline's tech capabilities list
             foreach (var group in AnylineScanModes.GetAnylineScanModesGroupedList())
             {
@@ -67,33 +63,17 @@ public partial class MainPage : ContentPage
 
         AnylineScanMode scanMode = new AnylineScanMode(name_config[0], name_config[1], string.Empty);
 
-        await Navigation.PushAsync(new MyScanningWithAnylinePage(scanMode));
+        if (scanMode.Name == "Scan NFC of Passports")
+        {
+            await Navigation.PushAsync(new MyNFCScanningWithAnylinePage(scanMode));
+        }
+        else
+        {
+            await Navigation.PushAsync(new MyScanningWithAnylinePage(scanMode));
+        }
 
         (sender as Button).IsEnabled = true;
     }
-
-    //    private async void cvScanModes_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    //    {
-
-    //        if (e.CurrentSelection != e.PreviousSelection)
-    //        {
-    //            var status = await Permissions.CheckStatusAsync<Permissions.Camera>();
-    //            if (status != PermissionStatus.Granted)
-    //            {
-    //                await Permissions.RequestAsync<Permissions.Camera>();
-    //            }
-
-    //            var scanMode = e.CurrentSelection.FirstOrDefault() as AnylineScanMode;
-
-    //            if (scanMode != null)
-    //#if ANDROID
-    //                await Navigation.PushAsync(new MyScanningWithAnylinePage(scanMode));
-    //#elif IOS
-    //                await Navigation.PushAsync(new AnylineScanPage(scanMode));
-    //#endif
-    //            //cvScanModes.SelectedItem = null;
-    //        }
-    //    }
 
     private void ShowAnylineSDKVersion()
     {

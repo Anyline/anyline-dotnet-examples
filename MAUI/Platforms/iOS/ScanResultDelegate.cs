@@ -4,64 +4,26 @@ using Foundation;
 namespace Anyline.Examples.MAUI.Platforms.iOS
 {
     /// <summary>
-    /// This is the delegate class that implements all result callbacks for various ScanPlugins
+    /// This is the delegate class that implements the ResulReceived callback for the ScanPlugin
     /// </summary>
-    public sealed class ScanResultDelegate : NSObject,
-        IALIDPluginDelegate,
-        IALOCRScanPluginDelegate,
-        IALMeterScanPluginDelegate,
-        IALLicensePlateScanPluginDelegate,
-        IALBarcodeScanPluginDelegate,
-        IALTireScanPluginDelegate,
-        IALCompositeScanPluginDelegate
+    public sealed class ScanResultDelegate : ALScanPluginDelegate, IALViewPluginCompositeDelegate
     {
-        private Action<object> resultsAction;
+        private Action<object> _resultsAction;
 
         public ScanResultDelegate(Action<object> resultsAction)
         {
-            this.resultsAction = resultsAction;
+            _resultsAction = resultsAction;
         }
 
-        // we call this method in every case a result is received and deal with processing that result in the ResultViewController
-        void HandleResult(object result)
+        public override void ResultReceived(ALScanPlugin scanPlugin, ALScanResult scanResult)
         {
-            resultsAction?.Invoke(result.CreatePropertyDictionary());
+            _resultsAction?.Invoke(scanResult.CreatePropertyDictionary());
         }
 
-        public void DidFindResult(ALIDScanPlugin anylineIDScanPlugin, ALIDResult result)
+        [Export("viewPluginComposite:allResultsReceived:")]
+        public void AllResultsReceived(ALViewPluginComposite viewPluginComposite, ALScanResult[] scanResults)
         {
-            HandleResult(result);
-        }
-
-        public void DidFindResult(ALOCRScanPlugin anylineOCRScanPlugin, ALOCRResult result)
-        {
-            System.Diagnostics.Debug.WriteLine(result.Result);
-            HandleResult(result);
-        }
-
-        public void DidFindResult(ALMeterScanPlugin anylineMeterScanPlugin, ALMeterResult result)
-        {
-            HandleResult(result);
-        }
-
-        public void DidFindResult(ALLicensePlateScanPlugin anylineLicensePlateScanPlugin, ALLicensePlateResult result)
-        {
-            HandleResult(result);
-        }
-
-        public void DidFindResult(ALBarcodeScanPlugin anylineBarcodeScanPlugin, ALBarcodeResult result)
-        {
-            HandleResult(result);
-        }
-
-        public void DidFindResult(ALAbstractScanViewPluginComposite anylineCompositeScanPlugin, ALCompositeResult result)
-        {
-            HandleResult(result);
-        }
-
-        public void DidFindResult(ALTireScanPlugin anylineTireScanPlugin, ALTireResult result)
-        {
-            HandleResult(result);
+            _resultsAction?.Invoke(scanResults.CreatePropertyDictionary());
         }
     }
 }

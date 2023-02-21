@@ -1,92 +1,135 @@
 {
-  "camera" : {
-    "captureResolution" : "1080p",
-    "zoomGesture": true
+  "cameraConfig": {
+    "captureResolution": "1080p"
   },
-  "flash" : {
+  "flashConfig": {
     "mode": "manual",
-    "alignment": "bottom_right"
+    "alignment": "bottom_left",
+    "offset": {
+      "x": 0,
+      "y": -40
+    }
   },
-  "viewPlugin" : {
-    "plugin":{
-      "id":"ID",
-      "idPlugin": {
-        "universalIdConfig": {
-          "faceDetection": true,
-          "alphabet": "cyrillic",
-          "allowedLayouts": {
-            "mrz": [],
-            "drivingLicense": [],
-            "idFront": []
+  "viewPluginConfig": {
+    "pluginConfig": {
+      "id": "com.anyline.configs.plugin.id_mrz_dl_cyrillic",
+      "universalIdConfig": {
+        "allowedLayouts": {
+          "mrz": [],
+          "drivingLicense": [],
+          "idFront": []
+        },
+        "alphabet": "cyrillic",
+        "drivingLicense": {
+          "surname": {
+            "scanOption": 0,
+            "minConfidence": 40
           },
-          "drivingLicense": {
-            "lastName": {"scanOption": 0, "minConfidence": 40},
-            "lastName@cyr": {"scanOption": 0, "minConfidence": 40},
-            "firstName": {"scanOption": 0, "minConfidence": 40},
-            "firstName@cyr": {"scanOption": 0, "minConfidence": 40},
-            "dateOfBirth": {"scanOption": 0, "minConfidence": 50},
-            "placeOfBirth": {"scanOption": 1, "minConfidence": 50},
-            "dateOfIssue": {"scanOption": 0, "minConfidence": 50},
-            "dateOfExpiry": {"scanOption": 1, "minConfidence": 50},
-            "authority": {"scanOption": 1, "minConfidence": 30},
-            "documentNumber": {"scanOption": 0, "minConfidence": 40},
-            "address": {"scanOption": 1},
-            "address@cyr": {"scanOption": 1},
-            "nationality": {"scanOption": 1},
-            "nationality@cyr": {"scanOption": 1}
+          "givenNames": {
+            "scanOption": 0,
+            "minConfidence": 40
           },
-          "idFront": {
-              "lastName": {"scanOption": 0, "minConfidence": 40},
-              "lastName@cyr": {"scanOption": 0, "minConfidence": 40},
-              "firstName": {"scanOption": 0, "minConfidence": 40},
-              "firstName@cyr": {"scanOption": 0, "minConfidence": 40},
-              "dateOfBirth": {"scanOption": 0, "minConfidence": 50},
-              "placeOfBirth": {"scanOption": 1, "minConfidence": 50},
-              "dateOfIssue": {"scanOption": 0, "minConfidence": 50},
-              "dateOfExpiry": {"scanOption": 1, "minConfidence": 50},
-              "authority": {"scanOption": 1, "minConfidence": 30},
-              "documentNumber": {"scanOption": 0, "minConfidence": 40},
-              "address": {"scanOption": 1},
-              "address@cyr": {"scanOption": 1},
-              "nationality": {"scanOption": 1},
-              "nationality@cyr": {"scanOption": 1}
+          "dateOfBirth": {
+            "scanOption": 0,
+            "minConfidence": 50
+          },
+          "placeOfBirth": {
+            "scanOption": 1,
+            "minConfidence": 50
+          },
+          "dateOfIssue": {
+            "scanOption": 0,
+            "minConfidence": 50
+          },
+          "dateOfExpiry": {
+            "scanOption": 1,
+            "minConfidence": 50
+          },
+          "authority": {
+            "scanOption": 1,
+            "minConfidence": 30
+          },
+          "documentNumber": {
+            "scanOption": 0,
+            "minConfidence": 40
+          },
+          "categories": {
+            "scanOption": 1,
+            "minConfidence": 30
+          },
+          "address": {
+            "scanOption": 1
+          }
+        },
+        "idFront": {
+          "surname": {
+            "scanOption": 0,
+            "minConfidence": 60
+          },
+          "givenNames": {
+            "scanOption": 0,
+            "minConfidence": 60
+          },
+          "dateOfBirth": {
+            "scanOption": 0,
+            "minConfidence": 60
+          },
+          "placeOfBirth": {
+            "scanOption": 1,
+            "minConfidence": 60
+          },
+          "dateOfExpiry": {
+            "scanOption": 1,
+            "minConfidence": 60
+          },
+          "cardAccessNumber": {
+            "scanOption": 1,
+            "minConfidence": 60
+          },
+          "documentNumber": {
+            "scanOption": 0,
+            "minConfidence": 60
+          },
+          "nationality": {
+            "scanOption": 1,
+            "minConfidence": 60
           }
         }
-      }
+      },
+      "cancelOnResult": true
     },
-    "cutoutConfig" : {
+    "cutoutConfig": {
       "style": "animated_rect",
       "maxWidthPercent": "90%",
       "maxHeightPercent": "90%",
       "alignment": "center",
-      "strokeWidth": 3,
-      "cornerRadius": 8,
-      "strokeColor": "FFFFFF",
-      "outerColor": "000000",
+      "strokeWidth": 2,
+      "cornerRadius": 4,
       "outerAlpha": 0.3,
-      "ratioFromSize" : {
+      "ratioFromSize": {
         "width": 50,
         "height": 31
       },
       "cropPadding": {
-        "x": -50,
-        "y": -50
+        "x": 25,
+        "y": 25
       },
       "cropOffset": {
         "x": 0,
         "y": 0
       },
+      "strokeColor": "0099FF",
+      "outerColor": "000000",
       "feedbackStrokeColor": "0099FF"
     },
-    "scanFeedback" : {
+    "scanFeedbackConfig": {
       "style": "CONTOUR_RECT",
       "visualFeedbackRedrawTimeout": 100,
       "strokeColor": "0099FF",
-      "fillColor" : "220099FF",
+      "fillColor": "220099FF",
       "beepOnResult": true,
       "vibrateOnResult": true,
       "strokeWidth": 2
-    },
-    "cancelOnResult" : true
+    }
   }
 }

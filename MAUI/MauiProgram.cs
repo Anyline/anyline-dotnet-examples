@@ -3,14 +3,17 @@
 
 namespace Anyline.Examples.MAUI;
 
+using NFC;
 using Views;
 
 #if ANDROID
 using Anyline.Examples.MAUI.Platforms.Android.CustomRenderers;
+using Anyline.Examples.MAUI.Platforms.Android.NFC;
 #endif
 
 #if IOS
 using Anyline.Examples.MAUI.Platforms.iOS.CustomRenderers;
+using Anyline.Examples.MAUI.Platforms.iOS.NFC;
 #endif
 
 public static class MauiProgram
@@ -24,6 +27,7 @@ public static class MauiProgram
             {
                 //handlers.AddHandler(typeof(AnylineView), typeof(AnylineHandler));
                 handlers.AddHandler(typeof(AnylineScanningView), typeof(AnylineScanningViewRenderer));
+                handlers.AddHandler(typeof(NFCScanExampleView), typeof(NFCScanningViewRenderer));
             })
             .ConfigureFonts(fonts =>
             {

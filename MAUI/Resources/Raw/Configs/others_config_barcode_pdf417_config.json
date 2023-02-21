@@ -1,27 +1,31 @@
 ﻿{
   "cameraConfig": {
     "captureResolution": "1080p",
-    "pictureResolution": "1080p",
-    "zoomGesture": true
+    "pictureResolution": "1080p"
   },
   "flashConfig": {
-    "mode": "manual",
-    "alignment": "top_right"
+    "mode": "manual_off",
+    "alignment": "top_left"
   },
   "viewPluginConfig": {
     "pluginConfig": {
-      "id": "com.anyline.configs.plugin.universal-serial-number",
-      "ocrConfig": {
-        "scanMode": "auto"
+      "id": "com.anyline.configs.plugin.barcode-pdf417-aamva",
+      "barcodeConfig": {
+        "barcodeFormats": [
+          "PDF_417"
+        ],
+        "parseAAMVA": true
       },
       "cancelOnResult": true
     },
     "cutoutConfig": {
       "animation": "none",
-      "maxWidthPercent": "80%",
-      "alignment": "top_half",
+      "maxWidthPercent": "75%",
+      "maxHeightPercent": "50%",
+      "width": 0,
+      "alignment": "center",
       "ratioFromSize": {
-        "width": 5,
+        "width": 4,
         "height": 1
       },
       "offset": {
@@ -44,13 +48,12 @@
       "outerAlpha": 0.3
     },
     "scanFeedbackConfig": {
-      "style": "rect",
+      "style": "RECT",
       "strokeWidth": 2,
-      "cornerRadius": 2,
-      "strokeColor": "0099FF",
+      "strokeColor": "000000",
       "fillColor": "330099FF",
-      "beepOnResult": true,
-      "vibrateOnResult": true,
+      "beepOnResult": false,
+      "vibrateOnResult": false,
       "blinkAnimationOnResult": false
     }
   }
