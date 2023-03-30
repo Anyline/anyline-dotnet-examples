@@ -46,7 +46,8 @@ namespace Anyline.Examples.MAUI.Models
                 }),
                 new AnylineScanModeGroup("Composite", new List<AnylineScanMode>{
                     new AnylineScanMode("Serial Scanning (LPT - EU > DVL > VIN)","workflows_config_serial_scanning.json"),
-                    new AnylineScanMode("Parallel Scanning (Meter / Serial Number)","workflows_config_parallel_scanning.json")
+                    new AnylineScanMode("Parallel Scanning (Meter / Serial Number)","workflows_config_parallel_scanning.json"),
+                    new AnylineScanMode("Parallel - First Scan (VIN or Barcode)","workflows_config_parallel_first_scan.json")
                 }),
                 new AnylineScanModeGroup("NFC", new List<AnylineScanMode>
                 {
