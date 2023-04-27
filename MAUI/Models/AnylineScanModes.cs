@@ -34,6 +34,7 @@ namespace Anyline.Examples.MAUI.Models
                     new AnylineScanMode("TIN - DOT (North America Only)","tire_tin_dot_config.json"),
                     new AnylineScanMode("Tire Size Specifications","tire_size_config.json"),
                     new AnylineScanMode("Commercial Tire Identification Numbers","tire_commercial_tire_id_config.json"),
+                    new AnylineScanMode("Tire Make","tire_make_config.json"),
                 }),
                 new AnylineScanModeGroup("Maintenance, Repair & Operations", new List<AnylineScanMode>{
                     new AnylineScanMode("Universal Serial Number", "mro_usnr_config.json"),
