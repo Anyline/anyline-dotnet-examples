@@ -43,7 +43,6 @@ namespace Anyline.Examples.MAUI.Models
                 }),
                 new AnylineScanModeGroup("Barcode", new List<AnylineScanMode>{
                     new AnylineScanMode("Barcode", "others_config_barcode.json"),
-                    new AnylineScanMode("Barcode - PDF417 - AAMVA", "others_config_barcode_pdf417_config.json"),
                 }),
                 new AnylineScanModeGroup("Composite", new List<AnylineScanMode>{
                     new AnylineScanMode("Serial Scanning (LPT - EU > DVL > VIN)","workflows_config_serial_scanning.json"),

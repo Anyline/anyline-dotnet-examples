@@ -13,26 +13,11 @@
       "cancelOnResult": true,
       "japaneseLandingPermissionConfig": {
         "miscellaneous": {
-          "dateOfIssue": {
-            "scanOption": 0,
-            "minConfidence": 35
-          },
-          "dateOfExpiry": {
-            "scanOption": 0,
-            "minConfidence": 35
-          },
-          "status": {
-            "scanOption": 1,
-            "minConfidence": 35
-          },
-          "duration": {
-            "scanOption": 0,
-            "minConfidence": 35
-          },
-          "airport": {
-            "scanOption": 1,
-            "minConfidence": 35
-          }
+          "dateOfIssue": { "scanOption": "mandatory", "minConfidence": 35 },
+          "dateOfExpiry": { "scanOption": "mandatory", "minConfidence": 35 },
+          "status": { "scanOption":  "optional", "minConfidence": 35 },
+          "duration": { "scanOption": "mandatory", "minConfidence": 35 },
+          "airport": { "scanOption":  "optional", "minConfidence": 35 }
         }
       }
     },

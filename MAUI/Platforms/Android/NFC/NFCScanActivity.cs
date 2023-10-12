@@ -19,7 +19,7 @@ using IO.Anyline.Nfc.NFC;
 namespace Anyline.Examples.MAUI.Platforms.Android.NFC
 {
     [Activity(Label = "NFCScanActivity")]
-    public class NFCScanActivity : Activity, NfcDetector.INfcDetectionHandler
+    public class NFCScanActivity : Activity, INfcDetectionHandler
     {
         protected NfcAdapter mNfcAdapter;
 
@@ -74,7 +74,7 @@ namespace Anyline.Examples.MAUI.Platforms.Android.NFC
 
                     mNfcAdapter.EnableForegroundDispatch(
                         this,
-                        PendingIntent.GetActivity(this, 0, intent, 0),
+                        PendingIntent.GetActivity(this, 0, intent, PendingIntentFlags.Mutable),
                         new[] { new IntentFilter(NfcAdapter.ActionTechDiscovered) },
                         new string[][] {
                             new string[] {

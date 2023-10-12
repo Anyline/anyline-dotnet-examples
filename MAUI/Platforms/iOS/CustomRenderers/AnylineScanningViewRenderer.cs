@@ -80,6 +80,12 @@ namespace Anyline.Examples.MAUI.Platforms.iOS.CustomRenderers
         private void StartAnylineScanner()
         {
             NSError error = null;
+            
+            if(_scanView == null){
+                System.Diagnostics.Debug.WriteLine("ScanView is null and could not be started");
+                return;
+            }
+            
             var success = _scanView.ScanViewPlugin.StartWithError(out error);
             if (!success)
             {

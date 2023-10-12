@@ -1,10 +1,5 @@
-﻿using System;
-using Anyline.Examples.MAUI.NFC;
-using Anyline.Examples.MAUI.Platforms.iOS;
-using Anyline.Examples.MAUI.Platforms.iOS.NFC;
+﻿using Anyline.Examples.MAUI.NFC;
 using Microsoft.Maui.Controls.Handlers.Compatibility;
-using Microsoft.Maui.Controls.Platform;
-using CoreGraphics;
 using Foundation;
 using UIKit;
 using Anyline.SDK.NET.iOS;
@@ -13,9 +8,6 @@ namespace Anyline.Examples.MAUI.Platforms.iOS.NFC
 {
     public class NFCScanningViewRenderer : ViewRenderer, IALScanPluginDelegate, IALNFCDetectorDelegate
     {
-        private CGRect frame;
-        private bool initialized;
-
         private ALScanView _scanView;
 
         ALNFCDetector _nfcDetector;

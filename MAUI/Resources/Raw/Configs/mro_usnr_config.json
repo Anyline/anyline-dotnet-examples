@@ -1,8 +1,6 @@
 ﻿{
   "cameraConfig": {
-    "captureResolution": "1080p",
-    "pictureResolution": "1080p",
-    "zoomGesture": true
+    "captureResolution": "720"
   },
   "flashConfig": {
     "mode": "manual",
@@ -10,48 +8,37 @@
   },
   "viewPluginConfig": {
     "pluginConfig": {
-      "id": "com.anyline.configs.plugin.universal-serial-number",
-      "ocrConfig": {
-        "scanMode": "auto"
-      },
+      "id": "Universal Serial Numbers",
+      "ocrConfig": {},
+      "startScanDelay": 1000,
       "cancelOnResult": true
     },
     "cutoutConfig": {
-      "animation": "none",
-      "maxWidthPercent": "80%",
       "alignment": "top_half",
+      "maxWidthPercent": "80%",
+      "maxHeightPercent": "80%",
       "ratioFromSize": {
-        "width": 5,
+        "width": 2,
         "height": 1
       },
+      "strokeWidth": 2,
+      "strokeColor": "FFFFFF",
+      "cornerRadius": 4,
+      "outerColor": "000000",
+      "outerAlpha": 0.5,
+      "feedbackStrokeColor": "0099FF",
       "offset": {
         "x": 0,
-        "y": 0
-      },
-      "cropOffset": {
-        "x": 0,
-        "y": 0
-      },
-      "cropPadding": {
-        "x": 0,
-        "y": 0
-      },
-      "cornerRadius": 4,
-      "strokeColor": "0099ff",
-      "strokeWidth": 2,
-      "outerColor": "000000",
-      "feedbackStrokeColor": "0099FF",
-      "outerAlpha": 0.3
+        "y": -15
+      }
     },
     "scanFeedbackConfig": {
-      "style": "rect",
-      "strokeWidth": 2,
-      "cornerRadius": 2,
+      "style": "CONTOUR_RECT",
       "strokeColor": "0099FF",
-      "fillColor": "330099FF",
+      "fillColor": "220099FF",
       "beepOnResult": true,
       "vibrateOnResult": true,
-      "blinkAnimationOnResult": false
+      "blinkAnimationOnResult": true
     }
   }
 }

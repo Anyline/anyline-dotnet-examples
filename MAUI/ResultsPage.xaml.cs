@@ -5,8 +5,6 @@ namespace Anyline.Examples.MAUI;
 
 public partial class ResultsPage : ContentPage
 {
-    private Dictionary<string, object> _results;
-
     /// <summary>
     /// This page is reponsible for displaying the scan results. 
     /// It is built in a generic way to support any scan mode, but in your use-case, it is recommended to work only with a strongly typed object in the MAUI layer.

@@ -1,7 +1,6 @@
 ﻿{
   "cameraConfig": {
-    "captureResolution": "1080p",
-    "zoomGesture": true
+    "captureResolution": "1080"
   },
   "flashConfig": {
     "mode": "manual",
@@ -9,35 +8,41 @@
   },
   "viewPluginConfig": {
     "pluginConfig": {
-      "id": "TIRE",
+      "id": "Tire|Commercial Tire ID",
       "cancelOnResult": true,
-      "commercialTireIdConfig": {}
+      "commercialTireIdConfig": {
+        "upsideDownMode": "AUTO",
+        "minConfidence": 0
+      }
     },
     "cutoutConfig": {
-      "style": "animated_rect",
-      "maxWidthPercent": "80%",
-      "maxHeightPercent": "80%",
       "alignment": "center",
-      "strokeWidth": 2,
-      "cornerRadius": 4,
-      "strokeColor": "0099FF",
-      "outerColor": "000000",
-      "outerAlpha": 0.3,
-      "width": 720,
+      "maxWidthPercent": "60%",
+      "maxHeightPercent": "60%",
       "ratioFromSize": {
-        "width": 720,
-        "height": 144
+        "width": 5,
+        "height": 1
       },
-      "feedbackStrokeColor": "0099FF"
+      "strokeWidth": 2,
+      "strokeColor": "FFFFFF",
+      "cornerRadius": 4,
+      "outerColor": "000000",
+      "outerAlpha": 0.5,
+      "feedbackStrokeColor": "0099FF",
+      "offset": {
+        "x": 0,
+        "y": 0
+      }
     },
     "scanFeedbackConfig": {
       "animation": "traverse_multi",
       "animationDuration": 250,
-      "style": "rect",
+      "style": "contour_rect",
+      "strokeWidth": 2,
       "strokeColor": "0099FF",
-      "beepOnResult": true,
-      "vibrateOnResult": false,
-      "strokeWidth": 2
+      "beepOnResult": false,
+      "vibrateOnResult": true,
+      "blinkAnimationOnResult": true
     }
   }
 }

@@ -1,50 +1,50 @@
 ﻿{
   "cameraConfig": {
-    "captureResolution": "1080p",
-    "pictureResolution": "1080p"
+    "captureResolution": "720p",
+    "pictureResolution": "720p"
   },
   "flashConfig": {
-    "mode": "manual_off",
-    "alignment": "top_left"
+    "mode": "manual",
+    "alignment": "top_right"
   },
   "viewPluginConfig": {
     "pluginConfig": {
-      "id": "com.anyline.configs.plugin.auto-meter",
+      "id": "Meter|Analog/Digital Auto",
       "meterConfig": {
         "scanMode": "auto_analog_digital_meter"
       },
       "cancelOnResult": true
     },
     "cutoutConfig": {
-      "style": "rect",
-      "maxWidthPercent": "100%",
-      "width": 768,
-      "alignment": "top_half",
+      "alignment": "top",
+      "strokeWidth": 2,
+      "strokeColor": "FFFFFF",
+      "cornerRadius": 4,
+      "outerColor": "000000",
+      "outerAlpha": 0.5,
+      "feedbackStrokeColor": "0099FF",
+      "maxWidthPercent": "85%",
+      "maxHeightPercent": "85%",
       "ratioFromSize": {
-        "width": 9,
-        "height": 4
+        "width": 2,
+        "height": 1
       },
       "offset": {
         "x": 0,
-        "y": 80
-      },
-      "strokeWidth": 2,
-      "cornerRadius": 4,
-      "strokeColor": "0099FF",
-      "outerColor": "000000",
-      "outerAlpha": 0.3
+        "y": 120
+      }
     },
     "scanFeedbackConfig": {
-      "style": "contour_rect",
-      "strokeWidth": 2,
+      "style": "CONTOUR_RECT",
       "strokeColor": "0099FF",
+      "strokeWidth": 2,
       "fillColor": "220099FF",
       "cornerRadius": 2,
-      "beepOnResult": true,
-      "vibrateOnResult": true,
-      "blinkAnimationOnResult": true,
       "redrawTimeout": 200,
-      "animationDuration": 75
+      "animationDuration": 75,
+      "blinkAnimationOnResult": true,
+      "beepOnResult": true,
+      "vibrateOnResult": true
     }
   }
 }

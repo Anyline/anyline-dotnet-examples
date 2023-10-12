@@ -4,7 +4,7 @@
   },
   "flashConfig": {
     "mode": "manual",
-    "alignment": "bottom_left"
+    "alignment": "top_left"
   },
   "viewPluginConfig": {
     "pluginConfig": {
@@ -16,13 +16,12 @@
       "cancelOnResult": true
     },
     "cutoutConfig": {
-      "style": "rect",
-      "width": 720,
       "alignment": "center",
-      "maxWidthPercent": "80%",
+      "maxWidthPercent": "60%",
+      "maxHeightPercent": "60%",
       "ratioFromSize": {
-        "width": 720,
-        "height": 144
+        "width": 5,
+        "height": 1
       },
       "strokeWidth": 2,
       "strokeColor": "FFFFFF",

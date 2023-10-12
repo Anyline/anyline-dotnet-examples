@@ -18,7 +18,7 @@
 		<ApplicationIdGuid>9C37433F-9192-4C96-B49A-B9A7E047FBC2</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>4.0.0</ApplicationDisplayVersion>
+		<ApplicationDisplayVersion>5.0.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">12.0</SupportedOSPlatformVersion>
@@ -78,8 +78,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Anyline.SDK.NET.Android" Version="4.0.0" />
-		<PackageReference Include="Anyline.SDK.NET.iOS" Version="4.0.0" />
+		<PackageReference Include="Anyline.SDK.NET.Android" Version="5.0.0" />
+		<PackageReference Include="Anyline.SDK.NET.iOS" Version="5.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	</ItemGroup>
 
@@ -111,7 +111,6 @@
 
 	<ItemGroup>
 	  <BundleResource Include="Resources\Raw\Configs\vehicle_registration_certificate_config.json" />
-	  <BundleResource Include="Resources\Raw\Configs\others_config_barcode_pdf417_config.json" />
 	  <BundleResource Include="Resources\Raw\Configs\workflows_config_parallel_first_scan.json" />
 	  <BundleResource Include="Resources\Raw\Configs\tire_make_config.json" />
 	</ItemGroup>

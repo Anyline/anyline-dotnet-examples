@@ -2,8 +2,7 @@
 using Android.Util;
 using Anyline.Examples.MAUI.Platforms.Android;
 using IO.Anyline.Camera;
-using IO.Anyline.Plugin.ID;
-using IO.Anyline.View;
+using IO.Anyline2.View;
 using Microsoft.Maui.Handlers;
 
 namespace Anyline.Examples.MAUI.Handlers
@@ -35,16 +34,13 @@ namespace Anyline.Examples.MAUI.Handlers
 
                 _scanView.Init("Configs/usnr_config.json");
 
-                // Activates Face Detection if the MRZ Scanner was initialized
-                (((_scanView.ScanViewPlugin as IdScanViewPlugin)?.ScanPlugin as IdScanPlugin)?.IdConfig as MrzConfig)?.EnableFaceDetection(true);
-
                 //_scanView.ScanViewPlugin.AddScanResultListener(new MyScanResultListener());
 
                 // handle camera open events
-                _scanView.CameraOpened += _scanView_CameraOpened;
+                _scanView.CameraView.CameraOpened += _scanView_CameraOpened;
 
                 // handle camera error events
-                _scanView.CameraError += _scanView_CameraError;
+                _scanView.CameraView.CameraError += _scanView_CameraError;
             }
             catch (Exception e)
             {
@@ -81,8 +77,8 @@ namespace Anyline.Examples.MAUI.Handlers
                 _scanView.Stop();
                 _scanView.CameraView.ReleaseCamera();
                 _scanView.Dispose();
-                _scanView.CameraOpened -= _scanView_CameraOpened;
-                _scanView.CameraError -= _scanView_CameraError;
+                _scanView.CameraView.CameraOpened -= _scanView_CameraOpened;
+                _scanView.CameraView.CameraError -= _scanView_CameraError;
                 _scanView = null;
             }
 

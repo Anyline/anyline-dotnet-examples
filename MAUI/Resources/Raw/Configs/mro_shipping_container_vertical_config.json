@@ -1,8 +1,6 @@
 ﻿{
   "cameraConfig": {
-    "captureResolution": "1080p",
-    "pictureResolution": "1080p",
-    "zoomGesture": true
+    "captureResolution": "1080p"
   },
   "flashConfig": {
     "mode": "manual",
@@ -10,51 +8,37 @@
   },
   "viewPluginConfig": {
     "pluginConfig": {
-      "id": "com.anyline.configs.plugin.vertical-container",
+      "id": "Container|Vertical Shipping Containers",
       "containerConfig": {
         "scanMode": "VERTICAL"
       },
       "cancelOnResult": true
     },
     "cutoutConfig": {
-      "style": "rect",
-      "animation": "none",
       "maxWidthPercent": "10%",
       "alignment": "center",
       "ratioFromSize": {
         "width": 9,
         "height": 62
       },
+      "strokeWidth": 2,
+      "strokeColor": "FFFFFF",
+      "cornerRadius": 4,
+      "outerColor": "000000",
+      "outerAlpha": 0.5,
+      "feedbackStrokeColor": "0099FF",
       "offset": {
         "x": 0,
-        "y": 0
-      },
-      "cropOffset": {
-        "x": 0,
-        "y": 0
-      },
-      "cropPadding": {
-        "x": 0,
-        "y": 0
-      },
-      "cornerRadius": 4,
-      "strokeColor": "0099ff",
-      "strokeWidth": 2,
-      "outerColor": "000000",
-      "feedbackStrokeColor": "0099FF",
-      "outerAlpha": 0.3
+        "y": -15
+      }
     },
     "scanFeedbackConfig": {
-      "style": "contour_rect",
-      "animation": "traverse_multi",
-      "animationDuration": 250,
-      "strokeWidth": 2,
-      "cornerRadius": 2,
+      "style": "CONTOUR_RECT",
       "strokeColor": "0099FF",
-      "fillColor": "330099FF",
+      "fillColor": "220099FF",
+      "blinkAnimationOnResult": true,
       "beepOnResult": true,
-      "vibrateOnResult": true,
-      "blinkAnimationOnResult": true
+      "vibrateOnResult": true
     }
   }
 }

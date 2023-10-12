@@ -7,7 +7,6 @@ using Android.Util;
 using Android.Widget;
 using Anyline.Examples.MAUI.Views;
 using IO.Anyline.Camera;
-using IO.Anyline.View;
 using IO.Anyline2;
 using IO.Anyline2.View;
 using Java.Util;
