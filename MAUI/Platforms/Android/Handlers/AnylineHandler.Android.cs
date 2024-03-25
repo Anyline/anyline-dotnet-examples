@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Util;
 using Anyline.Examples.MAUI.Platforms.Android;
-using IO.Anyline.Camera;
+using IO.Anyline2.Camera;
 using IO.Anyline2.View;
 using Microsoft.Maui.Handlers;
 
