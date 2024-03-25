@@ -7,7 +7,7 @@ using Android.Util;
 using Android.Widget;
 using Anyline.Examples.MAUI.NFC;
 using Anyline.Examples.MAUI.Platforms.Android.NFC;
-using IO.Anyline.Camera;
+using IO.Anyline2.Camera;
 using IO.Anyline.Plugin.Result;
 using IO.Anyline2;
 using IO.Anyline2.View;
