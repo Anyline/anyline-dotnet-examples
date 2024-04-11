@@ -17,5 +17,15 @@ namespace Anyline
                 return false;
             }
         }
+
+        public String GetPluginVersion()
+        {           
+            return IO.Anyline2.AnylineSdk.GetPluginVersion().ToString();
+        }
+
+        public String GetSDKVersion()
+        {
+            return AT.Nineyards.Anyline.BuildConfig.VersionName;
+        }
     }
 }
