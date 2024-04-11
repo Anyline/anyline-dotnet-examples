@@ -12,6 +12,7 @@ using IO.Anyline2.View;
 using Java.Util;
 using Microsoft.Maui.Controls.Handlers.Compatibility;
 using Microsoft.Maui.Controls.Platform;
+using IO.Anyline2.Viewplugin.AR.UiFeedback;
 
 namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
 {
@@ -61,6 +62,7 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
 
                 _scanView.ScanViewPlugin.ResultReceived = this;
                 _scanView.ScanViewPlugin.ResultsReceived = this;
+                _scanView.ScanViewPlugin.UiFeedbackInfoReceived = new UIFeedbackLogger();
 
                 // Handle camera open events
                 _scanView.CameraView.CameraOpened += _scanView_CameraOpened;
@@ -103,6 +105,49 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
                 var dict = data.CreatePropertyDictionary();
                 (Element as AnylineScanningView).OnResult?.Invoke(dict);
             }
+        }
+
+        partial class UIFeedbackLogger : Java.Lang.Object, IEvent
+        {
+            void IEvent.EventReceived(Java.Lang.Object data)
+            {
+                var json = (Org.Json.JSONObject)data;
+                var messageArray = json.OptJSONArray("messages");
+                if (messageArray != null)
+                {
+                    for (int i = 0; i < messageArray.Length(); i++)
+                    {
+                        var msgEntry = UIFeedbackOverlayInfoEntry.FromJson((Org.Json.JSONObject) messageArray.Get(i));
+                        if (msgEntry.GetLevel() == UIFeedbackOverlayInfoEntry.Level.Info)
+                        {
+                            Log.Info("AnylineScanningViewRenderer - Android", "UIFeedbackInfo: " + msgEntry.Message);
+                        }
+                        else if (msgEntry.GetLevel() == UIFeedbackOverlayInfoEntry.Level.Warning)
+                        {
+                            Log.Warn("AnylineScanningViewRenderer - Android", "UIFeedbackWarn: " + msgEntry.Message);
+                        }
+                        else if (msgEntry.GetLevel() == UIFeedbackOverlayInfoEntry.Level.Error)
+                        {
+                            Log.Error("AnylineScanningViewRenderer - Android", "UIFeedbackError: " + msgEntry.Message);
+                        }
+                    }
+                }               
+            }
+        }
+
+        /// <summary>
+        /// On layout change, propagate changes to ScanView.
+        /// </summary>
+        /// <param name="changed"></param>
+        /// <param name="left"></param>
+        /// <param name="top"></param>
+        /// <param name="right"></param>
+        /// <param name="bottom"></param>
+        protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
+        {
+            base.OnLayout(changed, left, top, right, bottom);
+            if (_scanView != null)
+                _scanView.Layout(left, top, right, bottom);
         }
 
         /// <summary>

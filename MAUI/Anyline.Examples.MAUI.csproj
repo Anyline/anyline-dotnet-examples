@@ -18,7 +18,7 @@
 		<ApplicationIdGuid>9C37433F-9192-4C96-B49A-B9A7E047FBC2</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>6.0.0</ApplicationDisplayVersion>
+		<ApplicationDisplayVersion>6.1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">12.0</SupportedOSPlatformVersion>
@@ -79,9 +79,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Anyline.SDK.NET.Android" Version="6.0.0" />
-		<PackageReference Include="Anyline.SDK.NET.iOS" Version="6.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="Anyline.SDK.NET.iOS" Version="6.1.0" />
+		<PackageReference Include="Anyline.SDK.NET.Android" Version="6.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>

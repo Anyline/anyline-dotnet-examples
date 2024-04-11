@@ -15,12 +15,12 @@ public partial class MainPage : ContentPage
         NavigationPage.SetBackButtonTitle(this, "Home");
 
         // (this license key should be, ideally, securely fetched from your back-end server, a secret manager/provider, or obfuscated in the final app)
-        string licenseKey = "YOUR_LICENSE_KEY_HERE";
 
         string licenseErrorMessage = null;
 
         // Initializes the Anyline SDK natively in each platform and gets the result of the initialization back
-        bool isAnylineInitialized = new AnylineSDKService().SetupWithLicenseKey(licenseKey, out licenseErrorMessage);
+        AnylineSDKService anylineSDKService = new AnylineSDKService();
+        bool isAnylineInitialized = anylineSDKService.SetupWithLicenseKey(licenseKey, out licenseErrorMessage);
 
         if (isAnylineInitialized)
         {
@@ -45,7 +45,7 @@ public partial class MainPage : ContentPage
             slScanModes.Add(new Label { Text = licenseErrorMessage, FontSize = 14, TextColor = Colors.White, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand });
         }
 
-        ShowAnylineSDKVersion();
+        ShowAnylineSDKVersion(anylineSDKService);
     }
 
     private async void BtScan_Clicked(object sender, EventArgs e)
@@ -74,16 +74,11 @@ public partial class MainPage : ContentPage
         (sender as Button).IsEnabled = true;
     }
 
-    private void ShowAnylineSDKVersion()
+    private void ShowAnylineSDKVersion(AnylineSDKService anylineSDKService)
     {
-        Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-        var assembly = assemblies.Where(x => x.FullName.StartsWith("Anyline.SDK.NET")).FirstOrDefault();
-        if (assembly != null)
-        {
-            Version ver = assembly.GetName().Version;
-            slScanModes.Children.Add(new Label { Text = $"Anyline SDK Version: {ver}", FontSize = 10, Margin = 10, TextColor = Colors.White });
-            slScanModes.Children.Add(new Label { Text = $"App build: {GetAppVersion()}", FontSize = 10, Margin = 10, TextColor = Colors.White });
-        }
+        slScanModes.Children.Add(new Label { Text = $"Anyline Native SDK Version: {anylineSDKService.GetSDKVersion()}", FontSize = 10, Margin = 10, TextColor = Colors.White });
+        slScanModes.Children.Add(new Label { Text = $"Anyline Plugin Version: {anylineSDKService.GetPluginVersion()}", FontSize = 10, Margin = 10, TextColor = Colors.White });
+        slScanModes.Children.Add(new Label { Text = $"App build: {GetAppVersion()}", FontSize = 10, Margin = 10, TextColor = Colors.White });
     }
     private string GetAppVersion()
     {

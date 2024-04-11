@@ -20,5 +20,15 @@ namespace Anyline
                 return false;
             }
         }
+
+        public String GetPluginVersion()
+        {
+            return Anyline.SDK.NET.iOS.AnylineSDK.GetPluginVersion().ToString();
+        }
+
+        public String GetSDKVersion()
+        {
+            return Anyline.SDK.NET.iOS.AnylineSDK.VersionNumber;
+        }
     }
 }
