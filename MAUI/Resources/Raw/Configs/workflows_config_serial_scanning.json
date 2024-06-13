@@ -42,7 +42,20 @@
             "beepOnResult": true,
             "vibrateOnResult": true,
             "blinkAnimationOnResult": true
-          }
+          },
+          "uiFeedbackConfig": {
+            "presets": [
+              {
+                "presetName": "simple_instruction_label",
+                "presetAttributes": [
+                  {
+                    "attributeName": "instruction_text",
+                    "attributeValue": "Position the entire License Plate within the cutout"
+                  }
+                ]
+              }
+            ]
+          }          
         }
       },
       {
@@ -91,7 +104,20 @@
             "beepOnResult": true,
             "vibrateOnResult": true,
             "strokeWidth": 2
-          }
+          },
+          "uiFeedbackConfig": {
+            "presets": [
+              {
+                "presetName": "simple_instruction_label",
+                "presetAttributes": [
+                  {
+                    "attributeName": "instruction_text",
+                    "attributeValue": "Position the entire Driving License within the cutout"
+                  }
+                ]
+              }
+            ]
+          }          
         }
       },
       {
@@ -125,7 +151,20 @@
             "beepOnResult": false,
             "vibrateOnResult": true,
             "blinkAnimationOnResult": true
-          }
+          },
+          "uiFeedbackConfig": {
+            "presets": [
+              {
+                "presetName": "simple_instruction_label",
+                "presetAttributes": [
+                  {
+                    "attributeName": "instruction_text",
+                    "attributeValue": "Position the VIN within the cutout"
+                  }
+                ]
+              }
+            ]
+          }          
         }
       }
     ]

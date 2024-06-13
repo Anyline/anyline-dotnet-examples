@@ -15,6 +15,7 @@ public partial class MainPage : ContentPage
         NavigationPage.SetBackButtonTitle(this, "Home");
 
         // (this license key should be, ideally, securely fetched from your back-end server, a secret manager/provider, or obfuscated in the final app)
+        string licenseKey = "";
 
         string licenseErrorMessage = null;
 
