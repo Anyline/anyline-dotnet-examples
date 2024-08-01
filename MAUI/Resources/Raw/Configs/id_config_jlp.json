@@ -22,7 +22,6 @@
       }
     },
     "cutoutConfig": {
-      "style": "rect",
       "maxWidthPercent": "70%",
       "maxHeightPercent": "70%",
       "alignment": "center",
@@ -37,9 +36,9 @@
       },
       "feedbackStrokeColor": "0099FF"
     },
-    "scanFeedback": {
-      "style": "RECT",
-      "visualFeedbackRedrawTimeout": 100,
+    "scanFeedbackConfig": {
+      "style": "rect",
+      "redrawTimeout": 100,
       "strokeColor": "0099FF",
       "fillColor": "220099FF",
       "beepOnResult": true,
