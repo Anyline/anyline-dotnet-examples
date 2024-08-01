@@ -18,7 +18,8 @@ namespace Anyline.Examples.MAUI.Platforms.iOS.NFC
             if (window != null)
             {
                 InitializeAnylineScanView();
-                _nfcDetector = new ALNFCDetector(this, out NSError error);
+                NSError error = null;
+                _nfcDetector = new ALNFCDetector(this, out error);
             }
             else
             {
@@ -77,7 +78,7 @@ namespace Anyline.Examples.MAUI.Platforms.iOS.NFC
         private void StartMRZScanner()
         {
             NSError error = null;
-            var success = _scanView.ScanViewPlugin.StartWithError(out error);
+            var success = _scanView.ViewPlugin.StartWithError(out error);
             if (!success)
             {
                 if (error != null)
@@ -176,9 +177,9 @@ namespace Anyline.Examples.MAUI.Platforms.iOS.NFC
         #region teardown
         protected void DisposeAnyline()
         {
-            if (_scanView != null && _scanView.ScanViewPlugin != null)
+            if (_scanView != null && _scanView.ViewPlugin != null)
             {
-                _scanView.ScanViewPlugin.Stop();
+                _scanView.ViewPlugin.Stop();
             }
 
             _scanView?.Dispose();

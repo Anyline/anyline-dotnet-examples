@@ -86,7 +86,7 @@ namespace Anyline.Examples.MAUI.Handlers
         private void StartAnyline()
         {
             NSError error = null;
-            bool success = _scanView.ScanViewPlugin.StartWithError(out error);
+            bool success = _scanView.ViewPlugin.StartWithError(out error);
 
             if (!success)
             {
@@ -113,7 +113,7 @@ namespace Anyline.Examples.MAUI.Handlers
             //    PlatformView.Delegate = null;
             //}
             _scanView.StopCamera();
-            _scanView.ScanViewPlugin.Stop();
+            _scanView.ViewPlugin.Stop();
             PlatformView.RemoveFromSuperview();
         }
     }

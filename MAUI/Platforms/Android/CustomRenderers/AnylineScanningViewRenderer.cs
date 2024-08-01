@@ -89,7 +89,12 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
         private void _scanView_CameraOpened(object sender, CameraOpenedEventArgs e)
         {
             if (_scanView != null)
-                _scanView.Start();
+            {
+                if (_scanView.IsInitialized)
+                {
+                    _scanView.Start();
+                }                
+            }
         }
 
         /// <summary>
@@ -178,7 +183,10 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
         {
             if (_scanView != null)
             {
-                _scanView.Stop();
+                if (_scanView.IsInitialized)
+                {
+                    _scanView.Stop();
+                }                    
                 _scanView.CameraView.CameraOpened -= _scanView_CameraOpened;
                 _scanView.CameraView.CameraError -= _scanView_CameraError;
                 _scanView.CameraView.ReleaseCameraInBackground();

@@ -5,9 +5,9 @@ Anyline provides an easy-to-use SDK for applications to enable Optical Character
 * The Anyline .NET SDK is essentially a Binding Library that wraps around the native Anyline SDK so all native functionality can be simply invoked via C# calls. 
 
 * For more information, please refer to the
-native Anyline [Android](https://documentation.anyline.com/toc/platforms/android/index.html) and [iOS](https://documentation.anyline.com/toc/platforms/ios/index.html) SDKs documentation pages.
+native Anyline [Android](https://documentation.anyline.com/android-sdk-component/latest/index.html) and [iOS](https://documentation.anyline.com/ios-sdk-component/latest/index.html) SDKs documentation pages.
 
-<!-- Anyline [.NET](https://documentation.anyline.com/toc/platforms/dotnet) SDK, as well as the --> 
+<!-- Anyline [.NET](https://documentation.anyline.com/dotnet-sdk-component/latest/index.html) SDK, as well as the --> 
 
 ## Quick Start ##
 
@@ -22,12 +22,12 @@ native Anyline [Android](https://documentation.anyline.com/toc/platforms/android
 ### Examples ###
 
 The [MAUI](MAUI) directory provides source code for the Anyline MAUI Example App. Simply build & run the example project for your desired platform and enjoy scanning :)
-The examples app is designed in a generic way to work with any technical capability. In your use-case, it is advised to parse the scan results directly into the specific plugin objects. Check the "PLUGIN SPECIFICS" section on the [Android](https://documentation.anyline.com/toc/platforms/android/plugins/index.html) and [iOS](https://documentation.anyline.com/toc/platforms/ios/plugins/index.html) documentation pages for more information.
+The examples app is designed in a generic way to work with any technical capability. In your use-case, it is advised to parse the scan results directly into the specific plugin objects. Check the "PLUGIN SPECIFICS" section on the [Android](https://documentation.anyline.com/android-sdk-component/latest/index.html) and [iOS](https://documentation.anyline.com/ios-sdk-component/latest/index.html) documentation pages for more information.
 
 <!--
 ### Quick start & setup ###
 
-For a detailed setup guide on how to integrate Anyline for your scanning application, please visit the [Anyline .NET documentation](https://documentation.anyline.io/toc/platforms/dotnet/index.html).
+For a detailed setup guide on how to integrate Anyline for your scanning application, please visit the [Anyline .NET documentation](https://documentation.anyline.com/dotnet-sdk-component/latest/index.html).
 -->
 
 ### Available Technical Capabilities ###
