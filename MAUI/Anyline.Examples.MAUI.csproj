@@ -18,7 +18,7 @@
 		<ApplicationIdGuid>9C37433F-9192-4C96-B49A-B9A7E047FBC2</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>8.1.0</ApplicationDisplayVersion>
+		<ApplicationDisplayVersion>9.0.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">12.0</SupportedOSPlatformVersion>
@@ -70,18 +70,15 @@
 		<None Remove="Platforms\Android\Resources\layout\ScanLayout.axml" />
 		<None Remove="Resources\Raw\Configs\vrc_config.json" />
 		<None Remove="Resources\Raw\Configs\barcode_pdf417_config.json" />
-		<None Remove="NFC\" />
-		<None Remove="Platforms\Android\NFC\" />
 		<None Remove="Platforms\Android\Resources\layout\" />
-		<None Remove="Platforms\iOS\NFC\" />
 		<None Remove="Resources\Raw\Configs\workflows_config_parallel_first_scan.json" />
 		<None Remove="Resources\Raw\Configs\tire_make_config.json" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="Anyline.SDK.NET.iOS" Version="8.1.0" />
-		<PackageReference Include="Anyline.SDK.NET.Android" Version="8.1.0" />
+		<PackageReference Include="Anyline.SDK.NET.iOS" Version="9.0.0" />
+		<PackageReference Include="Anyline.SDK.NET.Android" Version="9.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -97,12 +94,6 @@
 		<MauiXaml Update="ResultsPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="NFC\NFCResultsPage.xaml">
-		  <SubType></SubType>
-		</MauiXaml>
-		<MauiXaml Condition=" '$(EnableDefaultXamlItems)' == 'true' " Update="NFC\MyScanningWithAnylinePage.xaml">
-		  <Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
 		<!-- Required for the usage of the Face Detection feature on Universal ID / MRZ scan modes -->
@@ -116,9 +107,6 @@
 	  <BundleResource Include="Resources\Raw\Configs\tire_make_config.json" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="NFC\" />
-	  <Folder Include="Platforms\Android\NFC\" />
 	  <Folder Include="Platforms\Android\Resources\layout\" />
-	  <Folder Include="Platforms\iOS\NFC\" />
 	</ItemGroup>
 </Project>
