@@ -1,5 +1,4 @@
 ﻿using Anyline.Examples.MAUI.Models;
-using Anyline.Examples.MAUI.NFC;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.PlatformConfiguration;
 using Microsoft.Maui.Controls.Shapes;
@@ -63,14 +62,7 @@ public partial class MainPage : ContentPage
 
         AnylineScanMode scanMode = new AnylineScanMode(name_config[0], name_config[1], string.Empty);
 
-        if (scanMode.Name == "Scan NFC of Passports")
-        {
-            await Navigation.PushAsync(new MyNFCScanningWithAnylinePage(scanMode));
-        }
-        else
-        {
-            await Navigation.PushAsync(new MyScanningWithAnylinePage(scanMode));
-        }
+        await Navigation.PushAsync(new MyScanningWithAnylinePage(scanMode));
 
         (sender as Button).IsEnabled = true;
     }

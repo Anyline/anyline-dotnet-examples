@@ -48,10 +48,6 @@ namespace Anyline.Examples.MAUI.Models
                     new AnylineScanMode("Serial Scanning (LPT - EU > DVL > VIN)","workflows_config_serial_scanning.json"),
                     new AnylineScanMode("Parallel Scanning (Meter / Serial Number)","workflows_config_parallel_scanning.json"),
                     new AnylineScanMode("Parallel - First Scan (VIN or Barcode)","workflows_config_parallel_first_scan.json")
-                }),
-                new AnylineScanModeGroup("NFC", new List<AnylineScanMode>
-                {
-                    new AnylineScanMode("Scan NFC of Passports","id_config_mrz.json")
                 })
             };
         }
@@ -71,7 +67,6 @@ namespace Anyline.Examples.MAUI.Models
     {
         public string Name { get; set; }
         public string JSONConfigPath { get; set; }
-        public bool IsNFC { get; set; }
 
         public AnylineScanMode(string name, string jsonConfigPath, string configsPath = "Configs/")
         {

@@ -30,12 +30,6 @@
 	<string>Assets.xcassets/appicon.appiconset</string>
 	<key>NSCameraUsageDescription</key>
 	<string>The camera permission is required for the scanning capability.</string>
-	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
-	<array>
-		<string>A0000002471001</string>
-	</array>
-	<key>NFCReaderUsageDescription</key>
-	<string>Please allow NFC access to read passports</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.anyline.maui.examples</string>
 	<key>MinimumOSVersion</key>
