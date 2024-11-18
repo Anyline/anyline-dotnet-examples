@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net7.0-ios;net7.0-android</TargetFrameworks>
+		<TargetFrameworks>net8.0-ios;net8.0-android</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net6.0-tizen</TargetFrameworks> -->
 		<OutputType>Exe</OutputType>
@@ -18,7 +18,7 @@
 		<ApplicationIdGuid>9C37433F-9192-4C96-B49A-B9A7E047FBC2</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>9.0.0</ApplicationDisplayVersion>
+		<ApplicationDisplayVersion>9.1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">12.0</SupportedOSPlatformVersion>
@@ -26,17 +26,18 @@
 		<UserSecretsId>381bf50f-33f2-474a-b1b8-d1ec9021d557</UserSecretsId>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
 		<MtouchLink>None</MtouchLink>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
 		<MtouchLink>None</MtouchLink>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
 		<MtouchLink>SdkOnly</MtouchLink>
 		<MtouchExtraArgs> --weak-framework=NewsstandKit</MtouchExtraArgs>
+		<MtouchNoSymbolStrip>True</MtouchNoSymbolStrip>
 		<BuildIpa>True</BuildIpa>
 		<IpaPackageName>Anyline MAUI Examples</IpaPackageName>
 		<IpaIncludeArtwork>True</IpaIncludeArtwork>
@@ -46,9 +47,17 @@
 		<CodesignEntitlements></CodesignEntitlements>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
+		<MtouchNoSymbolStrip>True</MtouchNoSymbolStrip>
 		<CodesignKey>iPhone Distribution</CodesignKey>
 		<CodesignEntitlements>Platforms\iOS\Entitlements.plist</CodesignEntitlements>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(TargetFramework.Contains('-ios'))">
+		<!--DEBUG ON DEVICE-->
+		<RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
+		<!--DEBUG ON SIMULATOR-->
+		<!--<RuntimeIdentifier>iossimulator-x64</RuntimeIdentifier>-->
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -76,9 +85,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="Anyline.SDK.NET.iOS" Version="9.0.0" />
-		<PackageReference Include="Anyline.SDK.NET.Android" Version="9.0.0" />
+		<PackageReference Include="Anyline.SDK.NET.iOS" Version="9.1.0" />
+		<PackageReference Include="Anyline.SDK.NET.Android" Version="9.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -95,7 +105,7 @@
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
 		<!-- Required for the usage of the Face Detection feature on Universal ID / MRZ scan modes -->
 		<PackageReference Include="Xamarin.GooglePlayServices.MLKit.FaceDetection" Version="116.1.7" />
 		<PackageReference Include="Xamarin.Google.Dagger" Version="2.27.0" />
