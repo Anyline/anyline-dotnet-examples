@@ -169,14 +169,8 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
         #region Teardown
         protected override void OnDetachedFromWindow()
         {
+            DisposeAnyline();
             base.OnDetachedFromWindow();
-            DisposeAnyline();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            DisposeAnyline();
         }
 
         private void DisposeAnyline()
