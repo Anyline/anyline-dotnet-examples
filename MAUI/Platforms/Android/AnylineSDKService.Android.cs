@@ -1,4 +1,7 @@
-﻿
+﻿using IO.Anyline2;
+using IO.Anyline2.Init;
+
+
 namespace Anyline
 {
     public partial class AnylineSDKService
@@ -7,7 +10,12 @@ namespace Anyline
         {
             try
             {
-                IO.Anyline2.AnylineSdk.Init(licenseKey, context: Examples.MAUI.MainActivity.Instance);
+                AnylineSdk.Init(
+                    context: Examples.MAUI.MainActivity.Instance, 
+                    new SdkInitializationConfig(
+                        new SdkInitializationParameters(licenseKey: licenseKey),
+                        SdkInitializationStrategy.SyncManual.Instance)
+                    );                
                 licenseErrorMessage = null;
                 return true;
             }
@@ -20,7 +28,7 @@ namespace Anyline
 
         public String GetPluginVersion()
         {           
-            return IO.Anyline2.AnylineSdk.GetPluginVersion().ToString();
+            return AnylineSdk.GetPluginVersion().ToString();
         }
 
         public String GetSDKVersion()

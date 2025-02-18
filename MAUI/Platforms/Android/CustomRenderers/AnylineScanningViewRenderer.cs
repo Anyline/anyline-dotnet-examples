@@ -1,15 +1,10 @@
-﻿using Android.App;
-using Android.Content;
+﻿using Android.Content;
 using Android.Content.Res;
-using Android.Graphics;
-using Android.Runtime;
 using Android.Util;
 using Android.Widget;
 using Anyline.Examples.MAUI.Views;
-using IO.Anyline2.Camera;
 using IO.Anyline2;
 using IO.Anyline2.View;
-using Java.Util;
 using Microsoft.Maui.Controls.Handlers.Compatibility;
 using Microsoft.Maui.Controls.Platform;
 using IO.Anyline2.Viewplugin.AR.UiFeedback;
@@ -19,16 +14,11 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
     /// <summary>
     /// This class is responsible for rendering the Anyline ScanView natively.
     /// </summary>
-    internal class AnylineScanningViewRenderer : ViewRenderer, IEvent
+    internal class AnylineScanningViewRenderer(Context context) : ViewRenderer(context), IEvent
     {
         private bool _initialized;
-        private IO.Anyline2.View.ScanView _scanView;
-        private Context _context;
-
-        public AnylineScanningViewRenderer(Context context) : base(context)
-        {
-            _context = context;
-        }
+        private ScanView _scanView;
+        private readonly Context _context = context;
 
         protected override void OnElementChanged(ElementChangedEventArgs<View> e)
         {
@@ -50,50 +40,43 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
             if (_initialized)
                 return;
 
-            try
-            {
-                _scanView = new IO.Anyline2.View.ScanView(_context);
-
-                // Obtain the JSON config file path from the "AnylineScanningView", defined in the MAUI level.
-                string jsonConfigFilePath = (Element as AnylineScanningView).JSONConfigPath.Replace(".json", "") + ".json";
-
-                // This is the main intialization method that will create our use case depending on the JSON configuration.
-                _scanView.Init(jsonConfigFilePath);
-
-                _scanView.ScanViewPlugin.ResultReceived = this;
-                _scanView.ScanViewPlugin.ResultsReceived = this;
-                _scanView.ScanViewPlugin.UiFeedbackInfoReceived = new UIFeedbackLogger();
-
-                // Handle camera open events
-                _scanView.CameraView.CameraOpened += _scanView_CameraOpened;
-
-                // Handle camera error events
-                _scanView.CameraView.CameraError += _scanView_CameraError;
-
-                _initialized = true;
-                AddView(_scanView);
-            }
-            catch (Exception e)
-            {
-                // show error
-                Toast.MakeText(_context, e.ToString(), ToastLength.Long).Show();
-                Log.Debug("AnylineScanningViewRenderer - Android", e.ToString());
-            }
+            _scanView = new ScanView(_context);
+            AddView(_scanView);                
+            _scanView.SetOnScanViewLoaded(new ScanViewLoadHandler(this, Element, _scanView));
+            _initialized = true;
         }
 
-        private void _scanView_CameraError(object sender, CameraErrorEventArgs e)
+        class ScanViewLoadHandler(AnylineScanningViewRenderer parent, View element, ScanView scanView) : Java.Lang.Object, IEvent
         {
-            Log.Debug("AnylineScanningViewRenderer - Android", e.ToString());
-        }
-
-        private void _scanView_CameraOpened(object sender, CameraOpenedEventArgs e)
-        {
-            if (_scanView != null)
+            void IEvent.EventReceived(Java.Lang.Object args)
             {
-                if (_scanView.IsInitialized)
+                var scanViewLoadResult = (ScanViewLoadResult) args;
+                if (scanViewLoadResult is ScanViewLoadResult.Succeeded succeeded)
                 {
-                    _scanView.Start();
-                }                
+                    // Obtain the JSON config file path from the "AnylineScanningView", defined in the MAUI level.
+                    string jsonConfigFilePath = (element as AnylineScanningView).JSONConfigPath.Replace(".json", "") + ".json";
+
+                    // This is the main intialization method that will create our use case depending on the JSON configuration.
+                    try
+                    {
+                        scanView.Init(jsonConfigFilePath);
+                        scanView.ScanViewPlugin.ResultReceived = parent;
+                        scanView.ScanViewPlugin.ResultsReceived = parent;
+                        scanView.ScanViewPlugin.UiFeedbackInfoReceived = new UIFeedbackLogger();                        
+                        scanView.Start();    
+                    } catch (Exception e)
+                    {
+                        // show error
+                        Toast.MakeText(scanView.Context, e.ToString(), ToastLength.Long).Show();
+                        Log.Debug("AnylineScanningViewRenderer - Android", e.ToString());
+                    }
+                }
+                else if (scanViewLoadResult is ScanViewLoadResult.Failed { ErrorMessage: not null } failed)
+                {
+                    // show error
+                    Toast.MakeText(scanView.Context, failed.ErrorMessage, ToastLength.Long).Show();
+                    Log.Debug("AnylineScanningViewRenderer - Android", failed.ErrorMessage);
+                }
             }
         }
 
@@ -112,7 +95,7 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
             }
         }
 
-        partial class UIFeedbackLogger : Java.Lang.Object, IEvent
+        class UIFeedbackLogger : Java.Lang.Object, IEvent
         {
             void IEvent.EventReceived(Java.Lang.Object data)
             {
@@ -120,7 +103,7 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
                 var messageArray = json.OptJSONArray("messages");
                 if (messageArray != null)
                 {
-                    for (int i = 0; i < messageArray.Length(); i++)
+                    for (var i = 0; i < messageArray.Length(); i++)
                     {
                         var msgEntry = UIFeedbackOverlayInfoEntry.FromJson((Org.Json.JSONObject) messageArray.Get(i));
                         if (msgEntry.GetLevel() == UIFeedbackOverlayInfoEntry.Level.Info)
@@ -181,9 +164,6 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
                 {
                     _scanView.Stop();
                 }                    
-                _scanView.CameraView.CameraOpened -= _scanView_CameraOpened;
-                _scanView.CameraView.CameraError -= _scanView_CameraError;
-                _scanView.CameraView.ReleaseCameraInBackground();
                 _scanView.Dispose();
                 _scanView = null;
             }
