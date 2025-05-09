@@ -9,6 +9,7 @@ namespace Anyline.Examples.MAUI;
 /// </summary>
 public partial class MyScanningWithAnylinePage : ContentPage
 {
+    int _resultCount = 0;
     /// <summary>
     /// The constructor initializes a new "AnylineScanningView" (which is rendered natively in Android & iOS),
     /// and provides a "myResultAction", which will be called once the scanning process is successfully completed.
@@ -20,7 +21,7 @@ public partial class MyScanningWithAnylinePage : ContentPage
         Title = scanMode.Name;
         Action<object> myResultAction = (r) =>
         {
-            var results = r as Dictionary<string, object>;
+            var results = r as Lazy<Dictionary<string, object>>;
             DoSomethingWithResult(results, scanMode);
         };
 
@@ -34,12 +35,20 @@ public partial class MyScanningWithAnylinePage : ContentPage
     /// </summary>
     /// <param name="results">The scan results, coming from the native platform.</param>
     /// <param name="scanMode">Object containing the Name of the ScanMode and the JSON config file path (used for re-initializing the ScanView page).</param>
-    private void DoSomethingWithResult(Dictionary<string, object> results, AnylineScanMode scanMode)
+    private void DoSomethingWithResult(Lazy<Dictionary<string, object>> results, AnylineScanMode scanMode)
     {
-        Dispatcher.Dispatch(new Action(async () =>
+        if (scanMode.IsContinuous())
         {
-            Navigation.InsertPageBefore(new ResultsPage(results, scanMode), Navigation.NavigationStack.Last());
-            await Navigation.PopAsync();
-        }));
+            _resultCount++;
+            Title = scanMode.Name + " (" + _resultCount + ")";
+        }
+        else
+        {
+            Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(300), async void () =>
+            {
+                Navigation.InsertPageBefore(new ResultsPage(results.Value, scanMode), Navigation.NavigationStack.Last());
+                await Navigation.PopAsync();
+            });
+        }
     }
 }

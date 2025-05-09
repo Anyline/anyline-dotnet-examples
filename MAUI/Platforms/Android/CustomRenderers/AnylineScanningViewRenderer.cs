@@ -90,7 +90,7 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
             if (data != null)
             {
                 // Parse the result
-                var dict = data.CreatePropertyDictionary();
+                var dict = new Lazy<Dictionary<string, object>>(() => data.CreatePropertyDictionary());
                 (Element as AnylineScanningView).OnResult?.Invoke(dict);
             }
         }

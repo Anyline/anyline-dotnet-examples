@@ -1,4 +1,7 @@
 ﻿
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 namespace Anyline.Examples.MAUI.Models
 {
     /// <summary>
@@ -42,7 +45,9 @@ namespace Anyline.Examples.MAUI.Models
                     new AnylineScanMode("Shipping Container - Vertical", "mro_shipping_container_vertical_config.json"),
                 }),
                 new AnylineScanModeGroup("Barcode", new List<AnylineScanMode>{
-                    new AnylineScanMode("Barcode", "others_config_barcode.json"),
+                    new AnylineScanMode("Barcode (Single)", "barcode_config_single.json"),
+                    new AnylineScanMode("Barcode (Multi)", "barcode_config_multi.json"),
+                    new AnylineScanMode("Barcode (Multi Continuous)", "barcode_config_multi_continuous.json"),
                 }),
                 new AnylineScanModeGroup("Composite", new List<AnylineScanMode>{
                     new AnylineScanMode("Serial Scanning (LPT - EU > DVL > VIN)","workflows_config_serial_scanning.json"),
@@ -67,11 +72,53 @@ namespace Anyline.Examples.MAUI.Models
     {
         public string Name { get; set; }
         public string JSONConfigPath { get; set; }
+        
+        private Lazy<ScanModeContent> _scanModeJsonContent;
 
         public AnylineScanMode(string name, string jsonConfigPath, string configsPath = "Configs/")
         {
             Name = name;
             JSONConfigPath = configsPath + jsonConfigPath;
+            _scanModeJsonContent = new Lazy<ScanModeContent>(() => new ScanModeContent(JSONConfigPath));
+        }
+
+        public bool IsContinuous()
+        {
+            if (_scanModeJsonContent.Value.jsonContentDictionary.TryGetValue("viewPluginConfig", out var viewPluginConfig))
+            {
+                if (viewPluginConfig is JObject viewPluginConfigJObject)
+                {
+                    if (viewPluginConfigJObject["pluginConfig"] is JObject pluginConfigJObject)
+                    {
+                        var cancelOnResult = pluginConfigJObject["cancelOnResult"]?.ToObject<bool>();
+                        if (cancelOnResult.HasValue)
+                        {
+                            return !cancelOnResult.Value;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        private class ScanModeContent(string jsonConfigPath)
+        {
+            public Dictionary<string, object> jsonContentDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(LoadJsonContent(jsonConfigPath));
+            
+            private static string LoadJsonContent(string jsonConfigPath)
+            {
+                try
+                {
+                    using var stream = FileSystem.OpenAppPackageFileAsync(jsonConfigPath).Result;
+                    using var reader = new StreamReader(stream);
+
+                    return reader.ReadToEnd();
+                }
+                catch (Exception ex)
+                {
+                    return "";
+                }                
+            }
         }
     }
 
