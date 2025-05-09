@@ -17,13 +17,15 @@ namespace Anyline.Examples.MAUI.Platforms.iOS
 
         public override void ResultReceived(ALScanPlugin scanPlugin, ALScanResult scanResult)
         {
-            _resultsAction?.Invoke(scanResult.CreatePropertyDictionary());
+            var dict = new Lazy<Dictionary<string, object>>(() => scanResult.CreatePropertyDictionary());
+            _resultsAction?.Invoke(dict);
         }
 
         [Export("viewPluginComposite:allResultsReceived:")]
         public void AllResultsReceived(ALViewPluginComposite viewPluginComposite, ALScanResult[] scanResults)
         {
-            _resultsAction?.Invoke(scanResults.CreatePropertyDictionary());
+            var dict = new Lazy<Dictionary<string, object>>(() => scanResults.CreatePropertyDictionary());
+            _resultsAction?.Invoke(dict);
         }
     }
 }

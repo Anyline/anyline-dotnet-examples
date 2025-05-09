@@ -10,6 +10,7 @@
     "pluginConfig": {
       "id": "Barcode|Barcodes",
       "barcodeConfig": {
+        "fastProcessMode": true,
         "barcodeFormats": [
           "ALL"
         ],
