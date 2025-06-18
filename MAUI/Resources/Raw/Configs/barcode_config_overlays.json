@@ -1,0 +1,51 @@
+{
+  "cameraConfig": {
+    "captureResolution": "1080p"
+  },
+  "flashConfig": {
+    "mode": "auto",
+    "alignment": "bottom_right"
+  },
+  "viewPluginConfig": {
+    "pluginConfig": {
+      "id": "Barcode|Barcodes",
+      "barcodeConfig": {
+        "fastProcessMode": true,
+        "barcodeFormats": [
+          "ALL"
+        ],
+        "parseAAMVA": true,
+        "multiBarcode": true
+      },
+      "cancelOnResult": false
+    },
+    "cutoutConfig": {
+      "maxWidthPercent": "90%",
+      "maxHeightPercent": "85%",
+      "ratioFromSize": {
+        "width": 100,
+        "height": 80
+      },      
+      "alignment": "center",
+      "strokeWidth": 3,
+      "cornerRadius": 2,
+      "strokeColor": "FFFFFF",
+      "outerColor": "000000",
+      "outerAlpha": 0.5,
+      "feedbackStrokeColor": "0099FF"
+    },
+    "uiFeedbackConfig": {
+      "presets": [
+        {
+          "presetName": "simple_instruction_label",
+          "presetAttributes": [
+            {
+              "attributeName": "instruction_text",
+              "attributeValue": "Tap on a barcode to select it, tap again to unselect"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,9 +1,7 @@
 ﻿using Anyline.Examples.MAUI.Views;
 using Anyline.SDK.NET.iOS;
-using CoreGraphics;
 using Foundation;
 using Microsoft.Maui.Controls.Handlers.Compatibility;
-using Microsoft.Maui.Controls.Platform;
 using UIKit;
 
 namespace Anyline.Examples.MAUI.Platforms.iOS.CustomRenderers
@@ -31,12 +29,13 @@ namespace Anyline.Examples.MAUI.Platforms.iOS.CustomRenderers
 
             try
             {
+                var scanningView = Element as AnylineScanningView;
                 // Obtain the JSON config file path, defined in the MAUI level.
-                string jsonConfigFilePath = (Element as AnylineScanningView).JSONConfigPath.Replace(".json", "");
+                string jsonConfigFilePath = scanningView.ScanMode.JSONConfigPath.Replace(".json", "");
 
                 var configPath = NSBundle.MainBundle.PathForResource(jsonConfigFilePath, @"json");
 
-                _resultDelegate = new ScanResultDelegate((Element as AnylineScanningView).OnResult);
+                _resultDelegate = new ScanResultDelegate(scanningView.OnResult);
 
                 // This is the main intialization method that will create our use case depending on the JSON configuration.
                 _scanView = ALScanViewFactory.WithConfigFilePath(configPath, _resultDelegate, out error);
@@ -45,6 +44,11 @@ namespace Anyline.Examples.MAUI.Platforms.iOS.CustomRenderers
                 {
                     throw new Exception(error.LocalizedDescription);
                 }
+                
+                if (scanningView.ScanMode.ApplyBarcodeOverlays)
+                {
+                    _scanView.EnableBarcodeOverlays(scanningView.BarcodeOverlayListener);
+                }                
 
                 Add(_scanView);
 
