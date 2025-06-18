@@ -1,5 +1,6 @@
 ﻿using Android.Content;
 using Android.Content.Res;
+using Android.Runtime;
 using Android.Util;
 using Android.Widget;
 using Anyline.Examples.MAUI.Views;
@@ -14,7 +15,8 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
     /// <summary>
     /// This class is responsible for rendering the Anyline ScanView natively.
     /// </summary>
-    internal class AnylineScanningViewRenderer(Context context) : ViewRenderer(context), IEvent
+    internal class AnylineScanningViewRenderer(Context context)
+        : ViewRenderer(context), IEvent
     {
         private bool _initialized;
         private ScanView _scanView;
@@ -53,8 +55,9 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
                 var scanViewLoadResult = (ScanViewLoadResult) args;
                 if (scanViewLoadResult is ScanViewLoadResult.Succeeded succeeded)
                 {
+                    var scanningView = element as AnylineScanningView;
                     // Obtain the JSON config file path from the "AnylineScanningView", defined in the MAUI level.
-                    string jsonConfigFilePath = (element as AnylineScanningView).JSONConfigPath.Replace(".json", "") + ".json";
+                    string jsonConfigFilePath = scanningView.ScanMode.JSONConfigPath.Replace(".json", "") + ".json";
 
                     // This is the main intialization method that will create our use case depending on the JSON configuration.
                     try
@@ -63,7 +66,12 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
                         scanView.ScanViewPlugin.ResultReceived = parent;
                         scanView.ScanViewPlugin.ResultsReceived = parent;
                         scanView.ScanViewPlugin.UiFeedbackInfoReceived = new UIFeedbackLogger();                        
-                        scanView.Start();    
+                        scanView.Start();
+                        
+                        if (scanningView.ScanMode.ApplyBarcodeOverlays)
+                        {
+                            scanView.ScanViewPlugin.ActiveScanViewPlugin.First().EnableBarcodeOverlays(scanningView.BarcodeOverlayListener);
+                        }
                     } catch (Exception e)
                     {
                         // show error
@@ -89,9 +97,21 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
         {
             if (data != null)
             {
-                // Parse the result
-                var dict = new Lazy<Dictionary<string, object>>(() => data.CreatePropertyDictionary());
-                (Element as AnylineScanningView).OnResult?.Invoke(dict);
+                Anyline.SDK.NET.Common.ScanResult[] scanResults = null;
+                if (data is IO.Anyline2.ScanResult javaScanResult)
+                {
+                    scanResults = [javaScanResult.ToCommon()];
+                }
+                else if (data is JavaList javaScanResults)
+                {
+                    scanResults = new Anyline.SDK.NET.Common.ScanResult[javaScanResults.Size()];
+                    for (var i = 0; i < javaScanResults.Size(); i++)
+                    {
+                        scanResults[i] = (javaScanResults.Get(i) as IO.Anyline2.ScanResult).ToCommon();    
+                    }
+                }
+                
+                (Element as AnylineScanningView).OnResult?.Invoke(scanResults);
             }
         }
 

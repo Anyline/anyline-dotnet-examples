@@ -1,6 +1,5 @@
 ﻿
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using Anyline.SDK.NET.Common.Config;
 
 namespace Anyline.Examples.MAUI.Models
 {
@@ -48,6 +47,7 @@ namespace Anyline.Examples.MAUI.Models
                     new AnylineScanMode("Barcode (Single)", "barcode_config_single.json"),
                     new AnylineScanMode("Barcode (Multi)", "barcode_config_multi.json"),
                     new AnylineScanMode("Barcode (Multi Continuous)", "barcode_config_multi_continuous.json"),
+                    new AnylineScanMode("Barcode (Overlays)", "barcode_config_overlays.json", applyBarcodeOverlays: true),
                 }),
                 new AnylineScanModeGroup("Composite", new List<AnylineScanMode>{
                     new AnylineScanMode("Serial Scanning (LPT - EU > DVL > VIN)","workflows_config_serial_scanning.json"),
@@ -68,57 +68,33 @@ namespace Anyline.Examples.MAUI.Models
         }
     }
 
-    public class AnylineScanMode
+    public class AnylineScanMode(string name, string jsonConfigPath, string configsPath = "Configs/", bool applyBarcodeOverlays = false)
     {
-        public string Name { get; set; }
-        public string JSONConfigPath { get; set; }
+        public readonly string Name = name;
+        public readonly string JSONConfigPath = configsPath + jsonConfigPath;
+        public readonly bool ApplyBarcodeOverlays = applyBarcodeOverlays;
         
-        private Lazy<ScanModeContent> _scanModeJsonContent;
-
-        public AnylineScanMode(string name, string jsonConfigPath, string configsPath = "Configs/")
-        {
-            Name = name;
-            JSONConfigPath = configsPath + jsonConfigPath;
-            _scanModeJsonContent = new Lazy<ScanModeContent>(() => new ScanModeContent(JSONConfigPath));
-        }
+        private Lazy<ScanViewConfiguration> _scanViewConfiguration = 
+            new (() => ScanViewConfiguration.FromJson(LoadJsonContent(configsPath + jsonConfigPath)));
 
         public bool IsContinuous()
         {
-            if (_scanModeJsonContent.Value.jsonContentDictionary.TryGetValue("viewPluginConfig", out var viewPluginConfig))
-            {
-                if (viewPluginConfig is JObject viewPluginConfigJObject)
-                {
-                    if (viewPluginConfigJObject["pluginConfig"] is JObject pluginConfigJObject)
-                    {
-                        var cancelOnResult = pluginConfigJObject["cancelOnResult"]?.ToObject<bool>();
-                        if (cancelOnResult.HasValue)
-                        {
-                            return !cancelOnResult.Value;
-                        }
-                    }
-                }
-            }
-            return false;
+            return !(_scanViewConfiguration.Value.ViewPluginConfig?.PluginConfig?.CancelOnResult) ?? false;
         }
 
-        private class ScanModeContent(string jsonConfigPath)
+        private static string LoadJsonContent(string jsonConfigPath)
         {
-            public Dictionary<string, object> jsonContentDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(LoadJsonContent(jsonConfigPath));
-            
-            private static string LoadJsonContent(string jsonConfigPath)
+            try
             {
-                try
-                {
-                    using var stream = FileSystem.OpenAppPackageFileAsync(jsonConfigPath).Result;
-                    using var reader = new StreamReader(stream);
+                using var stream = FileSystem.OpenAppPackageFileAsync(jsonConfigPath).Result;
+                using var reader = new StreamReader(stream);
 
-                    return reader.ReadToEnd();
-                }
-                catch (Exception ex)
-                {
-                    return "";
-                }                
+                return reader.ReadToEnd();
             }
+            catch (Exception ex)
+            {
+                return "";
+            }                
         }
     }
 

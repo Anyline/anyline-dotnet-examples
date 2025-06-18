@@ -1,8 +1,5 @@
 ﻿using Anyline.Examples.MAUI.Models;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.PlatformConfiguration;
 using Microsoft.Maui.Controls.Shapes;
-using System.Reflection;
 
 namespace Anyline.Examples.MAUI;
 
@@ -14,7 +11,6 @@ public partial class MainPage : ContentPage
         NavigationPage.SetBackButtonTitle(this, "Home");
 
         // (this license key should be, ideally, securely fetched from your back-end server, a secret manager/provider, or obfuscated in the final app)
-        string licenseKey = "";
 
         string licenseErrorMessage = null;
 
@@ -33,7 +29,7 @@ public partial class MainPage : ContentPage
                 {
                     var btScan = new Button() { Text = scanMode.Name, BackgroundColor = Color.FromArgb("32ADFF"), TextColor = Colors.White, Padding = 15, Margin = 10 };
                     btScan.Clicked += BtScan_Clicked;
-                    btScan.ClassId = scanMode.Name + ":" + scanMode.JSONConfigPath;
+                    btScan.CommandParameter = scanMode;
                     slScanModes.Children.Add(btScan);
                     slScanModes.Add(new Label { Text = licenseErrorMessage, FontSize = 14, TextColor = Colors.White, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.CenterAndExpand });
                 }
@@ -56,15 +52,13 @@ public partial class MainPage : ContentPage
             await Permissions.RequestAsync<Permissions.Camera>();
         }
 
-        (sender as Button).IsEnabled = false;
-        string classId = ((Button)sender).ClassId;
-        string[] name_config = classId.Split(":");
-
-        AnylineScanMode scanMode = new AnylineScanMode(name_config[0], name_config[1], string.Empty);
+        var btScan = (sender as Button);
+        btScan.IsEnabled = false;
+        AnylineScanMode scanMode = btScan.CommandParameter as AnylineScanMode;
 
         await Navigation.PushAsync(new MyScanningWithAnylinePage(scanMode));
 
-        (sender as Button).IsEnabled = true;
+        btScan.IsEnabled = true;
     }
 
     private void ShowAnylineSDKVersion(AnylineSDKService anylineSDKService)
