@@ -13,6 +13,7 @@ public partial class MyScanningWithAnylinePage : ContentPage
 {
     private readonly AnylineScanMode ScanMode;
     private readonly CommonBarcodeOverlayListenerImpl barcodeOverlayListener = null;
+    private readonly AnylineScanningView _anylineScanningView;
     
     /// <summary>
     /// The constructor initializes a new "AnylineScanningView" (which is rendered natively in Android & iOS),
@@ -53,9 +54,9 @@ public partial class MyScanningWithAnylinePage : ContentPage
                 })
             });
         }        
-        var view = new AnylineScanningView(scanMode, myResultAction, barcodeOverlayListener);
+        _anylineScanningView = new AnylineScanningView(scanMode, myResultAction, barcodeOverlayListener);
 
-        gridContent.Add(view);
+        gridContent.Add(_anylineScanningView);
     }
 
     /// <summary>
@@ -74,4 +75,11 @@ public partial class MyScanningWithAnylinePage : ContentPage
             });
         }
     }
+
+    protected override void OnDisappearing()
+    {
+        _anylineScanningView.OnDisappearing?.Invoke();
+        base.OnDisappearing();
+    }
+    
 }

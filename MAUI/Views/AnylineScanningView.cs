@@ -12,6 +12,7 @@ namespace Anyline.Examples.MAUI.Views
     {
         public AnylineScanMode ScanMode;
         public Action<object> OnResult;
+        public Action OnDisappearing;
         
         public readonly ICommonBarcodeOverlayListener BarcodeOverlayListener = null;
 
