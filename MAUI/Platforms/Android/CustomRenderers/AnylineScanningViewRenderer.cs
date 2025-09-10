@@ -34,6 +34,7 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
         protected override void OnAttachedToWindow()
         {
             base.OnAttachedToWindow();
+            (Element as AnylineScanningView).OnDisappearing = DisposeAnyline;
             InitializeAnyline();
         }
 
@@ -97,6 +98,8 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
         {
             if (data != null)
             {
+                var scanningView = Element as AnylineScanningView;
+                
                 Anyline.SDK.NET.Common.ScanResult[] scanResults = null;
                 if (data is IO.Anyline2.ScanResult javaScanResult)
                 {
@@ -110,8 +113,19 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
                         scanResults[i] = (javaScanResults.Get(i) as IO.Anyline2.ScanResult).ToCommon();    
                     }
                 }
+
+                if (!scanningView.ScanMode.IsContinuous())
+                {
+                    // ensure lazy image memory streams are loaded before the javaScanResult is disposed
+                    foreach (var scanResult in scanResults)
+                    {
+                        var imageMemoryStream = scanResult.ImageMemoryStream.Value;
+                        var cutoutImageMemoryStream = scanResult.CutoutImageMemoryStream.Value;
+                        var faceImageMemoryStream = scanResult.FaceImageMemoryStream.Value;
+                    }
+                }
                 
-                (Element as AnylineScanningView).OnResult?.Invoke(scanResults);
+                scanningView.OnResult?.Invoke(scanResults);
             }
         }
 
