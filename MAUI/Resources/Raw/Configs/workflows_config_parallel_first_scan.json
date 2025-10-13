@@ -31,7 +31,7 @@
             "strokeColor": "FFFFFF",
             "cornerRadius": 4,
             "outerColor": "000000",
-            "outerAlpha": 0.0,
+            "outerAlpha": 0.3,
             "feedbackStrokeColor": "0099FF"
           },
           "scanFeedbackConfig": {
