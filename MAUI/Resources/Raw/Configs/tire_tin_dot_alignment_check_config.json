@@ -8,10 +8,12 @@
   },
   "viewPluginConfig": {
     "pluginConfig": {
-      "id": "Tire|Universal TIN Numbers",
+      "id": "Tire|TIN DOT Numbers",
       "tinConfig": {
-        "scanMode": "UNIVERSAL",
-        "upsideDownMode": "AUTO"
+        "scanMode": "DOT",
+        "upsideDownMode": "AUTO",
+        "horizontalAlignmentRatio": 0.11,
+        "detectionMinHeightRatio": 0.36        
       },
       "cancelOnResult": true
     },
@@ -51,24 +53,24 @@
           "presetAttributes": [
             {
               "attributeName": "instruction_text",
-              "attributeValue": "Please make sure the entire TIN number is inside the cutout."
+              "attributeValue": "Please make sure the entire DOT number is inside the cutout."
             },
             {
               "attributeName": "cutout_overlay_normal_image",
-              "attributeValue": ""
+              "attributeValue": "uifeedback_tin_dot_cutout_normal"
             },
             {
               "attributeName": "cutout_overlay_upsidedown_image",
-              "attributeValue": ""
+              "attributeValue": "uifeedback_tin_dot_cutout_upsidedown"
             },
             {
               "attributeName": "alignment_alignleft_image",
-              "attributeValue": ""
+              "attributeValue": "uifeedback_tin_dot_alignleft"
             },
             {
               "attributeName": "alignment_alignright_image",
-              "attributeValue": ""
-            },
+              "attributeValue": "uifeedback_tin_dot_alignright"
+            },          
             {
               "attributeName": "lighting_toodark_image",
               "attributeValue": "uifeedback_default_toodark"
@@ -127,11 +129,11 @@
             },
             {
               "attributeName": "alignment_alignleft_sound",
-              "attributeValue": ""
+              "attributeValue": "info_sound_default.wav"
             },
             {
               "attributeName": "alignment_alignright_sound",
-              "attributeValue": ""
+              "attributeValue": "info_sound_default.wav"
             },            
             {
               "attributeName": "lighting_toodark_sound",
