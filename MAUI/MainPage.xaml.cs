@@ -47,12 +47,6 @@ public partial class MainPage : ContentPage
 
     private async void BtScan_Clicked(object sender, EventArgs e)
     {
-        var status = await Permissions.CheckStatusAsync<Permissions.Camera>();
-        if (status != PermissionStatus.Granted)
-        {
-            await Permissions.RequestAsync<Permissions.Camera>();
-        }
-
         var btScan = (sender as Button);
         btScan.IsEnabled = false;
         AnylineScanMode scanMode = btScan.CommandParameter as AnylineScanMode;
