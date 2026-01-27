@@ -351,3 +351,6 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# License keys - generated at build time, never commit
+MAUI/LicenseKey.cs
