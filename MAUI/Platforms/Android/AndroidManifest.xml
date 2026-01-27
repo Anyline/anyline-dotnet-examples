@@ -7,5 +7,5 @@
 	<uses-feature android:name="android.hardware.camera" android:required="false" />
 	<uses-feature android:name="android.hardware.camera.flash" />
 	<uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
-	<uses-sdk android:targetSdkVersion="34" android:minSdkVersion="24" />
+	<uses-sdk android:targetSdkVersion="36" android:minSdkVersion="24" />
 </manifest>

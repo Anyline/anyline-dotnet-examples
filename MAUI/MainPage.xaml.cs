@@ -1,4 +1,4 @@
-using Anyline.Examples.MAUI.Models;
+﻿using Anyline.Examples.MAUI.Models;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace Anyline.Examples.MAUI;
@@ -10,8 +10,9 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         NavigationPage.SetBackButtonTitle(this, "Home");
 
-        // (this license key should be, ideally, securely fetched from your back-end server, a secret manager/provider, or obfuscated in the final app)
-        string licenseKey = "";
+        // License key is loaded from the generated LicenseKey.cs file
+        // (ideally, securely fetched from your back-end server, a secret manager/provider, or obfuscated in the final app)
+        string licenseKey = LicenseKey.Value;
 
         string licenseErrorMessage = null;
 

@@ -33,6 +33,6 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.anyline.maui.examples</string>
 	<key>MinimumOSVersion</key>
-	<string>12.0</string>
+	<string>12.2</string>
 </dict>
 </plist>

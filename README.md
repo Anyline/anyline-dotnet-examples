@@ -13,6 +13,10 @@ native Anyline [Android](https://documentation.anyline.com/android-sdk-component
 
 * Clone or Download this repository and open the Solution located inside the MAUI folder in Visual Studio.
 
+## License Key Setup ##
+
+Before building the example app, you need to configure your Anyline [license key](MAUI/LicenseKey.example.cs).
+
 ## File summary ##
 
 * `MAUI` - [MAUI](MAUI) example apps.
@@ -51,7 +55,7 @@ For a detailed setup guide on how to integrate Anyline for your scanning applica
 
 #### iOS ####
 
-- Minimum iOS 12.0.
+- Minimum iOS 12.2.
 - Minimum iPhone 5s.
 - A Mac computer for building / deploying to the iPhone.
 
