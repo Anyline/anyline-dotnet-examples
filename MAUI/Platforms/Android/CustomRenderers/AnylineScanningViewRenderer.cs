@@ -1,5 +1,4 @@
 ﻿using Android.Content;
-using Android.Content.Res;
 using Android.Runtime;
 using Android.Util;
 using Android.Widget;
@@ -7,7 +6,6 @@ using Anyline.Examples.MAUI.Views;
 using IO.Anyline2;
 using IO.Anyline2.View;
 using Microsoft.Maui.Controls.Handlers.Compatibility;
-using Microsoft.Maui.Controls.Platform;
 using IO.Anyline2.Viewplugin.AR.UiFeedback;
 
 namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
@@ -22,15 +20,6 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
         private ScanView _scanView;
         private readonly Context _context = context;
 
-        protected override void OnElementChanged(ElementChangedEventArgs<View> e)
-        {
-            base.OnElementChanged(e);
-            if (e.OldElement != null || Element == null)
-            {
-                return;
-            }
-        }
-
         protected override void OnAttachedToWindow()
         {
             base.OnAttachedToWindow();
@@ -44,7 +33,7 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
                 return;
 
             _scanView = new ScanView(_context);
-            AddView(_scanView);                
+            AddView(_scanView, new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent));
             _scanView.SetOnScanViewLoaded(new ScanViewLoadHandler(this, Element, _scanView));
             _initialized = true;
         }
@@ -66,9 +55,9 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
                         scanView.Init(jsonConfigFilePath);
                         scanView.ScanViewPlugin.ResultReceived = parent;
                         scanView.ScanViewPlugin.ResultsReceived = parent;
-                        scanView.ScanViewPlugin.UiFeedbackInfoReceived = new UIFeedbackLogger();                        
+                        scanView.ScanViewPlugin.UiFeedbackInfoReceived = new UIFeedbackLogger();
                         scanView.Start();
-                        
+
                         if (scanningView.ScanMode.ApplyBarcodeOverlays)
                         {
                             scanView.ScanViewPlugin.ActiveScanViewPlugin.First().EnableBarcodeOverlays(scanningView.BarcodeOverlayListener);
@@ -99,7 +88,7 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
             if (data != null)
             {
                 var scanningView = Element as AnylineScanningView;
-                
+
                 Anyline.SDK.NET.Common.ScanResult[] scanResults = null;
                 if (data is IO.Anyline2.ScanResult javaScanResult)
                 {
@@ -110,7 +99,7 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
                     scanResults = new Anyline.SDK.NET.Common.ScanResult[javaScanResults.Size()];
                     for (var i = 0; i < javaScanResults.Size(); i++)
                     {
-                        scanResults[i] = (javaScanResults.Get(i) as IO.Anyline2.ScanResult).ToCommon();    
+                        scanResults[i] = (javaScanResults.Get(i) as IO.Anyline2.ScanResult).ToCommon();
                     }
                 }
 
@@ -124,7 +113,7 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
                         var faceImageMemoryStream = scanResult.FaceImageMemoryStream.Value;
                     }
                 }
-                
+
                 scanningView.OnResult?.Invoke(scanResults);
             }
         }
@@ -153,34 +142,8 @@ namespace Anyline.Examples.MAUI.Platforms.Android.CustomRenderers
                             Log.Error("AnylineScanningViewRenderer - Android", "UIFeedbackError: " + msgEntry.Message);
                         }
                     }
-                }               
+                }
             }
-        }
-
-        /// <summary>
-        /// On layout change, propagate changes to ScanView.
-        /// </summary>
-        /// <param name="changed"></param>
-        /// <param name="left"></param>
-        /// <param name="top"></param>
-        /// <param name="right"></param>
-        /// <param name="bottom"></param>
-        protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
-        {
-            base.OnLayout(changed, left, top, right, bottom);
-            if (_scanView != null)
-                _scanView.Layout(left, top, right, bottom);
-        }
-
-        /// <summary>
-        /// On device rotated, dispose and re-initialize the ScanView.
-        /// </summary>
-        /// <param name="newConfig"></param>
-        protected override void OnConfigurationChanged(Configuration newConfig)
-        {
-            base.OnConfigurationChanged(newConfig);
-            DisposeAnyline();
-            InitializeAnyline();
         }
 
         #region Teardown
