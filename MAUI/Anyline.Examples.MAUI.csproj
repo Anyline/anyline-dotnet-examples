@@ -18,7 +18,7 @@
 		<ApplicationIdGuid>9C37433F-9192-4C96-B49A-B9A7E047FBC2</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>11.4.0</ApplicationDisplayVersion>
+		<ApplicationDisplayVersion>12.0.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">12.2</SupportedOSPlatformVersion>
@@ -77,18 +77,14 @@
 
 	<ItemGroup>
 		<None Remove="Platforms\Android\Resources\layout\ScanLayout.axml" />
-		<None Remove="Resources\Raw\Configs\vrc_config.json" />
-		<None Remove="Resources\Raw\Configs\barcode_pdf417_config.json" />
 		<None Remove="Platforms\Android\Resources\layout\" />
-		<None Remove="Resources\Raw\Configs\workflows_config_parallel_first_scan.json" />
-		<None Remove="Resources\Raw\Configs\tire_make_config.json" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="Anyline.SDK.NET.iOS" Version="11.4.0" />
-        <PackageReference Include="Anyline.SDK.NET.Android" Version="11.4.0" />
+		<PackageReference Include="Anyline.SDK.NET.iOS" Version="12.0.0" />
+        <PackageReference Include="Anyline.SDK.NET.Android" Version="12.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -110,12 +106,7 @@
 		<PackageReference Include="Xamarin.GooglePlayServices.MLKit.FaceDetection" Version="116.1.7" />
 		<PackageReference Include="Xamarin.Google.Dagger" Version="2.27.0" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <BundleResource Include="Resources\Raw\Configs\vehicle_registration_certificate_config.json" />
-	  <BundleResource Include="Resources\Raw\Configs\workflows_config_parallel_first_scan.json" />
-	  <BundleResource Include="Resources\Raw\Configs\tire_make_config.json" />
-	</ItemGroup>
+	
 	<ItemGroup>
 	  <Folder Include="Platforms\Android\Resources\layout\" />
 	</ItemGroup>

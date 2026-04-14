@@ -23,6 +23,10 @@
         "width": 2,
         "height": 1
       },
+      "cropPadding": {
+        "x": 66,
+        "y": 33
+      },
       "strokeWidth": 2,
       "cornerRadius": 10,
       "strokeColor": "FFFFFF",
