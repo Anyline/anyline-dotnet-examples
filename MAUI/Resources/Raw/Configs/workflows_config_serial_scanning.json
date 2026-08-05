@@ -64,7 +64,6 @@
             "id": "ID|Universal IDs",
             "cancelOnResult": true,
             "universalIdConfig": {
-              "faceDetectionEnabled": true,
               "allowedLayouts": {
                 "mrz": [],
                 "drivingLicense": [],

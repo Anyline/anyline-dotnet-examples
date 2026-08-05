@@ -12,7 +12,6 @@
       "id": "ID|Cyrillic IDs",
       "cancelOnResult": true,
       "universalIdConfig": {
-        "faceDetectionEnabled": true,
         "allowedLayouts": {
           "mrz": [],
           "drivingLicense": [],
