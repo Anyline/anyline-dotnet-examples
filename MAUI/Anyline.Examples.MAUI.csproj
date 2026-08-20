@@ -18,7 +18,7 @@
 		<ApplicationIdGuid>9C37433F-9192-4C96-B49A-B9A7E047FBC2</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>56.3.0</ApplicationDisplayVersion>
+		<ApplicationDisplayVersion>56.4.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">12.2</SupportedOSPlatformVersion>
@@ -83,8 +83,8 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="Anyline.SDK.NET.iOS" Version="56.3.0" />
-        <PackageReference Include="Anyline.SDK.NET.Android" Version="56.3.0" />
+		<PackageReference Include="Anyline.SDK.NET.iOS" Version="56.4.0" />
+        <PackageReference Include="Anyline.SDK.NET.Android" Version="56.4.0" />
 	</ItemGroup>
 
 	<ItemGroup>
