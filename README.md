@@ -55,8 +55,8 @@ For a detailed setup guide on how to integrate Anyline for your scanning applica
 
 #### iOS ####
 
-- Minimum iOS 12.2.
-- Minimum iPhone 5s.
+- Minimum iOS 15.0.
+- Minimum iPhone 6s.
 - A Mac computer for building / deploying to the iPhone.
 
 
